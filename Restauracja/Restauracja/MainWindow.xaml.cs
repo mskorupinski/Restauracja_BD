@@ -39,7 +39,7 @@ namespace Restauracja
                 logowanie.Ustaw_haslo(Text_Haslo.ToString());
 
                 sqlConn.Close();
-
+                //asgjhasfgjas
                 Logowanie.Visibility = Visibility.Hidden;
                 Panel.Visibility = Visibility.Visible;
             }
