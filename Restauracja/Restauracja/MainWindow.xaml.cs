@@ -57,5 +57,7 @@ namespace Restauracja
             public void Ustaw_login(string l) { login = l; }
             public void Ustaw_haslo(string h) { hasło = h; }
         }
+
+ 
     }
 }
