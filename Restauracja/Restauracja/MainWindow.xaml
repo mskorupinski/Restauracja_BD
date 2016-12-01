@@ -6,8 +6,23 @@
         xmlns:local="clr-namespace:Restauracja"
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
-    <Grid>
-        <Button x:Name="button" Content="Button" HorizontalAlignment="Left" Margin="268,222,0,0" VerticalAlignment="Top" Width="75" Click="button_Click"/>
-
+    <Grid x:Name="Glowny">
+        <Grid x:Name="Logowanie" HorizontalAlignment="Left" Height="311" Margin="1,0,0,0" VerticalAlignment="Top" Width="240">
+            <Label x:Name="Login" Content="Login:" HorizontalAlignment="Left" Margin="61,104,0,0" VerticalAlignment="Top"/>
+            <Label x:Name="Haslo" Content="Hasło:" HorizontalAlignment="Left" Margin="61,163,0,0" VerticalAlignment="Top"/>
+            <TextBox x:Name="Text_Logowanie" HorizontalAlignment="Left" Height="23" Margin="78,135,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <PasswordBox x:Name="Text_Haslo" HorizontalAlignment="Left" Margin="78,194,0,0" VerticalAlignment="Top" Width="120"/>
+            <Button x:Name="Zaloguj_Sie" Content="Zaloguj się" HorizontalAlignment="Left" Margin="87,231,0,0" VerticalAlignment="Top" Width="75" Click="Zaloguj_Sie_Click"/>
+        </Grid>
+        <Grid x:Name="Panel" HorizontalAlignment="Left" Height="286" Margin="276,25,0,0" VerticalAlignment="Top" Width="232" Visibility="Hidden">
+            <TabControl x:Name="tabControl" HorizontalAlignment="Left" Height="286" VerticalAlignment="Top" Width="232">
+                <TabItem Header="TabItem">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+                <TabItem Header="TabItem">
+                    <Grid Background="#FFE5E5E5"/>
+                </TabItem>
+            </TabControl>
+        </Grid>
     </Grid>
 </Window>
