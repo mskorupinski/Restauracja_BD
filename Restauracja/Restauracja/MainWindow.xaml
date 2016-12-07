@@ -25,11 +25,20 @@
                 </TabItem>
                 <TabItem Header="Rezerwacja">
                     <Grid Background="#FFE5E5E5">
-               
+
                     </Grid>
                 </TabItem>
                 <TabItem Header="Menu">
-                    <Grid Background="#FFE5E5E5"/>
+                    <Grid Background="#FFE5E5E5">
+                        <TextBox x:Name="Tekst_Menu_Nr" HorizontalAlignment="Left" Height="23" Margin="369,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <TextBox x:Name="Tekst_Menu_Cena" HorizontalAlignment="Left" Height="23" Margin="369,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <TextBox x:Name="Tekst_Menu_Opis" HorizontalAlignment="Left" Height="23" Margin="369,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <Label x:Name="Etykieta_Menu_Nr" Content="Nr menu" HorizontalAlignment="Left" Margin="369,21,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="Etykieta_Menu_Cena" Content="Cena" HorizontalAlignment="Left" Margin="369,73,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="Etykieta_Menu_Opis" Content="Opis" HorizontalAlignment="Left" Margin="369,127,0,0" VerticalAlignment="Top"/>
+                        <Button x:Name="Przycisk_Menu_Szukaj" Content="Szukaj" HorizontalAlignment="Left" Margin="369,214,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Menu_Szukaj_Click"/>
+                        <DataGrid x:Name="Dane_Menu" HorizontalAlignment="Left" Margin="29,21,0,0" VerticalAlignment="Top" Height="240" Width="311"/>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="Pracownicy">
                     <Grid Background="#FFE5E5E5">

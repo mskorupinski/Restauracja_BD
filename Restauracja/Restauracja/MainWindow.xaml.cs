@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
+using System.Data;
 
 namespace Restauracja
 {
@@ -58,6 +59,31 @@ namespace Restauracja
             public void Ustaw_haslo(string h) { hasło = h; }
         }
 
- 
+        private void Przycisk_Menu_Szukaj_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SqlConnection sqlConn = new SqlConnection("Server = LocalHost;Integrated Security = SSPI; Database = 'Restauracja'");
+
+                sqlConn.Open();
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.CommandText = "select * from Produkt";
+                sqlCmd.Connection = sqlConn;
+                SqlDataReader dataReader = sqlCmd.ExecuteReader();
+                DataTable dt = new DataTable();
+                dt.Load(dataReader);
+                Dane_Menu.ItemsSource=dt.DefaultView;
+                dataReader.Close();
+
+                sqlConn.Close();
+            }
+            catch (System.Data.SqlClient.SqlException ex)
+            {
+
+                MessageBox.Show(ex.Message,"Błąd");
+            }
+        }
+
+       
     }
 }
