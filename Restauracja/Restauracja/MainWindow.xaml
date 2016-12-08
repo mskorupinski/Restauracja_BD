@@ -25,28 +25,62 @@
                 </TabItem>
                 <TabItem Header="Rezerwacja">
                     <Grid Background="#FFE5E5E5">
+                        <Label x:Name="Etykieta_Rezerwacja_Imie" Content="Imię" HorizontalAlignment="Left" Margin="289,10,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="Tekst_Rezerwacja_Imie" HorizontalAlignment="Left" Height="23" Margin="289,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <Label x:Name="Etykieta_Rezerwacja_Nazwisko" Content="Nazwisko" HorizontalAlignment="Left" Margin="289,69,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="Tekst_Rezerwacja_Nazwisko" HorizontalAlignment="Left" Height="23" Margin="289,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <TextBox x:Name="Tekst_Rezerwacja_Numer" HorizontalAlignment="Left" Height="23" Margin="289,159,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.552,5.626"/>
+                        <Label x:Name="Etykieta_Rezerwacja_Numer" Content="Telefon" HorizontalAlignment="Left" Margin="289,128,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="Etykieta_Rezerwacja_Adres" Content="Adres email" HorizontalAlignment="Left" Margin="289,189,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="Tekst_Rezerwacja_Adres" HorizontalAlignment="Left" Height="23" Margin="289,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.552,5.626"/>
+                        <DataGrid x:Name="Dane_Rezerwacja" HorizontalAlignment="Left" Margin="23,25,0,0" VerticalAlignment="Top" Width="247" Height="257"/>
+                        <Label x:Name="Etykieta_Rezerwacja_Data" Content="Data rezerwacji" HorizontalAlignment="Left" Margin="430,7,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="Tekst_Rezerwacja_Data" HorizontalAlignment="Left" Height="23" Margin="430,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <TextBox x:Name="Tekst_Rezerwacja_Czas" HorizontalAlignment="Left" Height="23" Margin="430,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <TextBox x:Name="Tekst_Rezerwacja_Okres" HorizontalAlignment="Left" Height="23" Margin="432,159,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <TextBox x:Name="Tekst_Rezerwacja_Stolik" HorizontalAlignment="Left" Height="23" Margin="430,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <Label x:Name="Etykieta_Rezerwacja_Czas" Content="Czas rezerwacji" HorizontalAlignment="Left" Margin="426,69,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="Etykieta_Rezerwacja_Data_Copy1" Content="Okres rezerwacji" HorizontalAlignment="Left" Margin="432,128,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="Etykieta_Rezerwacja_Stolik" Content="Numer stolika" HorizontalAlignment="Left" Margin="432,189,0,0" VerticalAlignment="Top"/>
+                        <Button x:Name="Przycisk_Rezerwacja_Dodaj" Content="Dodaj rezerwację" HorizontalAlignment="Left" Margin="289,263,0,0" VerticalAlignment="Top" Width="120" Height="19"/>
+                        <Button x:Name="Przycisk_Rezerwacja_Wyswietl" Content="Wyświetl" HorizontalAlignment="Left" Margin="430,263,0,0" VerticalAlignment="Top" Width="120" Height="19"/>
 
                     </Grid>
                 </TabItem>
                 <TabItem Header="Menu">
                     <Grid Background="#FFE5E5E5">
-                        <TextBox x:Name="Tekst_Menu_Nr" HorizontalAlignment="Left" Height="23" Margin="369,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        <TextBox x:Name="Tekst_Menu_Cena" HorizontalAlignment="Left" Height="23" Margin="369,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <TextBox x:Name="Tekst_Menu_Nr" HorizontalAlignment="Left" Height="23" Margin="369,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Tekst_Menu_Nr_PreviewTextInput"/>
+                        <TextBox x:Name="Tekst_Menu_Cena" HorizontalAlignment="Left" Height="23" Margin="369,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Tekst_Menu_Cena_PreviewTextInput"/>
                         <TextBox x:Name="Tekst_Menu_Opis" HorizontalAlignment="Left" Height="23" Margin="369,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        <Label x:Name="Etykieta_Menu_Nr" Content="Nr menu" HorizontalAlignment="Left" Margin="369,21,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="Etykieta_Menu_Cena" Content="Cena" HorizontalAlignment="Left" Margin="369,73,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="Etykieta_Menu_Opis" Content="Opis" HorizontalAlignment="Left" Margin="369,127,0,0" VerticalAlignment="Top"/>
-                        <Button x:Name="Przycisk_Menu_Szukaj" Content="Szukaj" HorizontalAlignment="Left" Margin="369,214,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Menu_Szukaj_Click"/>
-                        <DataGrid x:Name="Dane_Menu" HorizontalAlignment="Left" Margin="29,21,0,0" VerticalAlignment="Top" Height="240" Width="311"/>
+                        <Label x:Name="Etykieta_Menu_Nr" Content="Nr menu" HorizontalAlignment="Left" Margin="369,26,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="Etykieta_Menu_Cena" Content="Cena" HorizontalAlignment="Left" Margin="369,80,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="Etykieta_Menu_Opis" Content="Opis" HorizontalAlignment="Left" Margin="372,127,0,0" VerticalAlignment="Top"/>
+                        <Button x:Name="Przycisk_Menu_Szukaj" Content="Szukaj" HorizontalAlignment="Left" Margin="372,214,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Menu_Szukaj_Click"/>
+                        <DataGrid x:Name="Dane_Menu" HorizontalAlignment="Left" Margin="29,21,0,0" VerticalAlignment="Top" Height="240" Width="311" IsReadOnly="True"/>
+                        <Button x:Name="Przycisk_Menu_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="477,214,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Menu_Dodaj_Click"/>
                     </Grid>
                 </TabItem>
                 <TabItem Header="Pracownicy">
                     <Grid Background="#FFE5E5E5">
+                        <DataGrid x:Name="Dane_Pracownicy" HorizontalAlignment="Left" Margin="40,37,0,0" VerticalAlignment="Top" Height="225" Width="240"/>
+                        <Label x:Name="Etykieta_Pracownicy_Imie" Content="Imię" HorizontalAlignment="Left" Margin="343,37,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="Etykieta_Pracownicy_Nazwisko" Content="Nazwisko" HorizontalAlignment="Left" Margin="343,109,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="Etykieta_Pracownicy_Stanowisko" Content="Stanowisko" HorizontalAlignment="Left" Margin="343,173,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="Tekst_Pracownicy_Imie" HorizontalAlignment="Left" Height="23" Margin="343,68,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <TextBox x:Name="Tekst_Pracownicy_Nazwisko" HorizontalAlignment="Left" Height="23" Margin="343,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <TextBox x:Name="Tekst_Pracownicy_Stanowisko" HorizontalAlignment="Left" Height="23" Margin="343,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <Button x:Name="Przycisk_Pracownicy_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="300,247,0,0" VerticalAlignment="Top" Width="75"/>
+                        <Button x:Name="Przycisk_Pracownicy_Wyswietl" Content="Wyświetl" HorizontalAlignment="Left" Margin="388,247,0,0" VerticalAlignment="Top" Width="75"/>
+                        <Button x:Name="Przycisk_Pracownicy_Edytuj" Content="Edytuj" HorizontalAlignment="Left" Margin="479,247,0,0" VerticalAlignment="Top" Width="75"/>
 
                     </Grid>
                 </TabItem>
                 <TabItem Header="Stoliki">
                     <Grid Background="#FFE5E5E5">
+                        <DataGrid x:Name="Dane_Stoliki" HorizontalAlignment="Left" Margin="24,29,0,0" VerticalAlignment="Top" Height="231" Width="221"/>
+                        <Label x:Name="Etykieta_Stoliki_Miejsca" Content="Ilość miejsc" HorizontalAlignment="Left" Margin="313,43,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="Tekst_Stoliki_Miejsca" HorizontalAlignment="Left" Height="23" Margin="313,94,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <Button x:Name="Przycisk_Stoliki_Wyswietl" Content="Wyświetl" HorizontalAlignment="Left" Margin="331,217,0,0" VerticalAlignment="Top" Width="75"/>
 
                     </Grid>
                 </TabItem>
