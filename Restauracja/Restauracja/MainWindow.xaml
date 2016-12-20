@@ -5,26 +5,43 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Restauracja"
         mc:Ignorable="d"
-        Title="MainWindow" Height="350" Width="600">
+        Title="MainWindow" Height="400" Width="600">
     <Grid x:Name="Glowny">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="248*"/>
+            <RowDefinition Height="73*"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="149*"/>
             <ColumnDefinition Width="148*"/>
         </Grid.ColumnDefinitions>
-        <Grid x:Name="Logowanie" HorizontalAlignment="Left" Height="321" Margin="1,0,-0.4,-0.2" VerticalAlignment="Top" Width="593" Grid.ColumnSpan="2" Visibility="Hidden">
+        <Grid x:Name="Logowanie" HorizontalAlignment="Left" Height="321" Margin="1,0,-0.4,-0.2" VerticalAlignment="Top" Width="593" Grid.ColumnSpan="2" Visibility="Hidden" Grid.RowSpan="2">
             <Label x:Name="Login" Content="Login:" HorizontalAlignment="Left" Margin="240,96,0,0" VerticalAlignment="Top"/>
             <Label x:Name="Haslo" Content="Hasło:" HorizontalAlignment="Left" Margin="240,163,0,0" VerticalAlignment="Top"/>
             <TextBox x:Name="Text_Logowanie" HorizontalAlignment="Left" Height="23" Margin="240,122,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
             <PasswordBox x:Name="Text_Haslo" HorizontalAlignment="Left" Margin="240,194,0,0" VerticalAlignment="Top" Width="120" Height="23"/>
             <Button x:Name="Zaloguj_Sie" Content="Zaloguj się" HorizontalAlignment="Left" Margin="262,222,0,0" VerticalAlignment="Top" Width="75" Click="Zaloguj_Sie_Click" IsDefault="True"/>
         </Grid>
-        <Grid x:Name="Panel" HorizontalAlignment="Left" Height="321" Margin="0,0,-0.4,-0.2" VerticalAlignment="Top" Width="594" Grid.ColumnSpan="2">
-            <TabControl x:Name="tabControl" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" UseLayoutRounding="True">
-                <TabItem Header="Zamówienie">
-                    <Grid Background="#FFE5E5E5"/>
+        <Grid x:Name="Panel" HorizontalAlignment="Left" Height="321" Margin="0,0,-0.4,-0.2" VerticalAlignment="Top" Width="594" Grid.ColumnSpan="2" Grid.RowSpan="2">
+            <TabControl x:Name="tabControl" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" UseLayoutRounding="True" SelectionChanged="tabControl_SelectionChanged" Margin="0,0,0,-48" Height="369" VerticalAlignment="Top">
+                <TabItem>
+
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="32" Source="talerz.png" Width="32"/>
+                            <TextBlock Text="Zamówienie" Margin="2,0,0,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </TabItem.Header>
+
                 </TabItem>
-                <TabItem Header="Rezerwacja">
-                    <Grid Background="#FFE5E5E5">
+                <TabItem >
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="32" Source="talerz.png" Width="32"/>
+                            <TextBlock Text="Rezerwacja" Margin="2,0,0,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </TabItem.Header>
+                    <Grid Background="#FFE5E5E5" Margin="0,-2,0,1.6">
                         <Label x:Name="Etykieta_Rezerwacja_Imie" Content="Imię" HorizontalAlignment="Left" Margin="289,10,0,0" VerticalAlignment="Top"/>
                         <TextBox x:Name="Tekst_Rezerwacja_Imie" HorizontalAlignment="Left" Height="23" Margin="289,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                         <Label x:Name="Etykieta_Rezerwacja_Nazwisko" Content="Nazwisko" HorizontalAlignment="Left" Margin="289,69,0,0" VerticalAlignment="Top"/>
@@ -46,21 +63,34 @@
                         <Button x:Name="Przycisk_Rezerwacja_Wyswietl" Content="Wyświetl" HorizontalAlignment="Left" Margin="430,263,0,0" VerticalAlignment="Top" Width="120" Height="19"/>
 
                     </Grid>
+
                 </TabItem>
-                <TabItem Header="Menu">
+                <TabItem >
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="32" Source="talerz.png" Width="32"/>
+                            <TextBlock Text="Menu" Margin="2,0,0,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </TabItem.Header>
                     <Grid Background="#FFE5E5E5">
-                        <TextBox x:Name="Tekst_Menu_Nr" HorizontalAlignment="Left" Height="23" Margin="369,52,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Tekst_Menu_Nr_PreviewTextInput"/>
                         <TextBox x:Name="Tekst_Menu_Cena" HorizontalAlignment="Left" Height="23" Margin="369,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Tekst_Menu_Cena_PreviewTextInput"/>
                         <TextBox x:Name="Tekst_Menu_Opis" HorizontalAlignment="Left" Height="23" Margin="369,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                         <Label x:Name="Etykieta_Menu_Nr" Content="Nr menu" HorizontalAlignment="Left" Margin="369,26,0,0" VerticalAlignment="Top"/>
                         <Label x:Name="Etykieta_Menu_Cena" Content="Cena" HorizontalAlignment="Left" Margin="369,80,0,0" VerticalAlignment="Top"/>
                         <Label x:Name="Etykieta_Menu_Opis" Content="Opis" HorizontalAlignment="Left" Margin="372,127,0,0" VerticalAlignment="Top"/>
                         <Button x:Name="Przycisk_Menu_Szukaj" Content="Szukaj" HorizontalAlignment="Left" Margin="372,214,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Menu_Szukaj_Click"/>
-                        <DataGrid x:Name="Dane_Menu" HorizontalAlignment="Left" Margin="29,21,0,0" VerticalAlignment="Top" Height="240" Width="311" IsReadOnly="True"/>
+                        <DataGrid x:Name="Dane_Menu" HorizontalAlignment="Left" Margin="29,21,0,0" VerticalAlignment="Top" Height="240" Width="311" IsReadOnly="True" ColumnWidth="*" FrozenColumnCount="1"/>
                         <Button x:Name="Przycisk_Menu_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="477,214,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Menu_Dodaj_Click"/>
+                        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="372,53,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="comboBox_DropDownOpened" DropDownClosed="comboBox_DropDownClosed"/>
                     </Grid>
                 </TabItem>
-                <TabItem Header="Pracownicy">
+                <TabItem>
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="32" Source="talerz.png" Width="32"/>
+                            <TextBlock Text="Pracownicy" Margin="2,0,0,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </TabItem.Header>
                     <Grid Background="#FFE5E5E5">
                         <DataGrid x:Name="Dane_Pracownicy" HorizontalAlignment="Left" Margin="40,37,0,0" VerticalAlignment="Top" Height="225" Width="240"/>
                         <Label x:Name="Etykieta_Pracownicy_Imie" Content="Imię" HorizontalAlignment="Left" Margin="343,37,0,0" VerticalAlignment="Top"/>
@@ -75,7 +105,13 @@
 
                     </Grid>
                 </TabItem>
-                <TabItem Header="Stoliki">
+                <TabItem  >
+                    <TabItem.Header>
+                        <StackPanel Orientation="Horizontal">
+                            <Image Height="32" Source="talerz.png" Width="32"/>
+                            <TextBlock Text="Stoliki" Margin="2,0,0,0" VerticalAlignment="Center" />
+                        </StackPanel>
+                    </TabItem.Header>
                     <Grid Background="#FFE5E5E5">
                         <DataGrid x:Name="Dane_Stoliki" HorizontalAlignment="Left" Margin="24,29,0,0" VerticalAlignment="Top" Height="231" Width="221"/>
                         <Label x:Name="Etykieta_Stoliki_Miejsca" Content="Ilość miejsc" HorizontalAlignment="Left" Margin="313,43,0,0" VerticalAlignment="Top"/>
@@ -84,6 +120,7 @@
 
                     </Grid>
                 </TabItem>
+
             </TabControl>
         </Grid>
     </Grid>
