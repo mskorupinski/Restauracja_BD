@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Threading.Tasks;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
@@ -14,6 +14,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Data.SqlClient;
 using System.Data;
+
 
 namespace Restauracja
 {
@@ -98,6 +99,31 @@ namespace Restauracja
 
         private void Przycisk_Menu_Dodaj_Click(object sender, RoutedEventArgs e)
         {
+            SqlConnection sqlConn = new SqlConnection("Server = LocalHost;Integrated Security = SSPI; Database = 'Restauracja'");
+
+            sqlConn.Open();
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.Connection = sqlConn;
+            
+
+
+            if (comboBox.Text == "")
+            {
+                MessageBox.Show("Wybierz menu", "Błąd");
+            }
+            else
+            {
+                sqlCmd.CommandText = "Select Id_menu from Menu where Opis = '" + comboBox.Text + "'";
+                int id_menu = (int)sqlCmd.ExecuteScalar();
+                sqlCmd.CommandText = "insert into Produkt (Opis_produktu, Cena_produktu, Id_menu) Values('" + Tekst_Menu_Opis.Text + "'," + Int32.Parse(Tekst_Menu_Cena.Text) + "," + id_menu + ");";
+                sqlCmd.ExecuteReader();
+                sqlConn.Close();
+
+                wyswietlMenu();
+
+
+            }
+
            
         }
 
@@ -128,6 +154,11 @@ namespace Restauracja
 
         private void comboBox_DropDownClosed(object sender, EventArgs e)
         {
+            wyswietlMenu();
+        }
+
+        public void wyswietlMenu()
+        {
             SqlConnection sqlConn = new SqlConnection("Server = LocalHost;Integrated Security = SSPI; Database = 'Restauracja'");
 
             sqlConn.Open();
@@ -135,8 +166,8 @@ namespace Restauracja
             sqlCmd.Connection = sqlConn;
             SqlDataReader dataReader = null;
 
-            Tekst_Menu_Cena.Text = comboBox.Text;
-
+            Tekst_Menu_Cena.Text = "";
+            Tekst_Menu_Opis.Text = "";
             sqlCmd.CommandText = "select Opis_produktu as Opis , Cena_produktu as Cena  from Produkt as p join  Menu as m on p.Id_menu=m.Id_menu where m.Opis='" + comboBox.Text + "'";
 
             dataReader = sqlCmd.ExecuteReader();
@@ -149,6 +180,7 @@ namespace Restauracja
 
                 dataReader.Close();
             }
+
             sqlConn.Close();
         }
     }
