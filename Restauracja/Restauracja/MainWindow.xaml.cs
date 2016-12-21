@@ -96,7 +96,7 @@ namespace Restauracja
 
         private void Przycisk_Menu_Dodaj_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection sqlConn = new SqlConnection("Server = LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection sqlConn = new SqlConnection("Server = E540;Integrated Security = SSPI; Database = 'Restauracja'");
 
             sqlConn.Open();
             SqlCommand sqlCmd = new SqlCommand();
@@ -147,7 +147,7 @@ namespace Restauracja
 
         private void Przycisk_Menu_Usun_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection sqlConn = new SqlConnection("Server = LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection sqlConn = new SqlConnection("Server =E540;Integrated Security = SSPI; Database = 'Restauracja'");
 
             sqlConn.Open();
             SqlCommand sqlCmd = new SqlCommand();
@@ -170,8 +170,9 @@ namespace Restauracja
                 }
                 if (liczba_wierszu >= 1)
                 {
-
-                   
+                    string temp = "update Produkt set Aktualnosc='nieaktualny' where Opis_produktu='" + row[0].ToString() + "' and Cena_produktu= " + row[1].ToString().Replace(",", ".");
+                    sqlCmd.CommandText = temp;
+                    sqlCmd.ExecuteReader();
 
                 }
                 sqlConn.Close();
@@ -194,7 +195,7 @@ namespace Restauracja
             if (comboBox.Items.Count > 0) comboBox.Items.Clear();
                 
             string Sql = "select Opis from Menu";
-            SqlConnection conn = new SqlConnection("Server = LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection conn = new SqlConnection("Server = E540;Integrated Security = SSPI; Database = 'Restauracja'");
             conn.Open();
             SqlCommand cmd = new SqlCommand(Sql, conn);
             SqlDataReader DR = cmd.ExecuteReader();
@@ -215,7 +216,7 @@ namespace Restauracja
 
         public void wyswietlMenu()
         {
-            SqlConnection sqlConn = new SqlConnection("Server = LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection sqlConn = new SqlConnection("Server = E540;Integrated Security = SSPI; Database = 'Restauracja'");
 
             sqlConn.Open();
             SqlCommand sqlCmd = new SqlCommand();
