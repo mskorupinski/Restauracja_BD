@@ -75,10 +75,7 @@ namespace Restauracja
             public void Ustaw_haslo(string h) { hasło = h; }
         }
 
-        private void Przycisk_Menu_Szukaj_Click(object sender, RoutedEventArgs e)
-        {
-            
-        }
+
 
         private void Tekst_Menu_Nr_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
@@ -90,7 +87,7 @@ namespace Restauracja
         {
             if (!char.IsDigit(e.Text, e.Text.Length - 1))
                 e.Handled = true;
-            if (e.Text[e.Text.Length - 1]=='.')
+            if (e.Text[e.Text.Length - 1]==',')
             {
                 e.Handled = false;
 
@@ -99,7 +96,7 @@ namespace Restauracja
 
         private void Przycisk_Menu_Dodaj_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection sqlConn = new SqlConnection("Server = LocalHost;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection sqlConn = new SqlConnection("Server = LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
 
             sqlConn.Open();
             SqlCommand sqlCmd = new SqlCommand();
@@ -117,16 +114,24 @@ namespace Restauracja
                 {
                     sqlCmd.CommandText = "Select Id_menu from Menu where Opis = '" + comboBox.Text + "'";
                     int id_menu = (int)sqlCmd.ExecuteScalar();
-                    sqlCmd.CommandText = "Select * from Produkt where Opis_produktu = '" + Tekst_Menu_Opis.Text + "' and Cena_produktu=" + decimal.Parse(Tekst_Menu_Cena.Text) + " and Aktualnosc='nieaktualny';";
-                    int liczba_wierszu = sqlCmd.ExecuteNonQuery();
+                    string result = Tekst_Menu_Cena.Text.Replace(",", ".");
+                    
+                    string insert= "Select count(*) from Produkt where Opis_produktu = '" + Tekst_Menu_Opis.Text + "' and Cena_produktu='" + result+"'";
+                    sqlCmd.CommandText = insert.Replace(",", ".");
+                    int liczba_wierszu = (int)sqlCmd.ExecuteScalar();
                     if (liczba_wierszu == 0)
                     {
-                        sqlCmd.CommandText = "insert into Produkt (Opis_produktu, Cena_produktu, Id_menu,Aktualnosc) Values('" + Tekst_Menu_Opis.Text + "'," + decimal.Parse(Tekst_Menu_Cena.Text) + "," + id_menu + ", 'aktualny');";
+
+                        string temp = "insert into Produkt (Opis_produktu, Cena_produktu, Id_menu,Aktualnosc) Values('" + Tekst_Menu_Opis.Text + "','" + result + "'," + id_menu + ", 'aktualny');";
+
+                        sqlCmd.CommandText = temp;
                         sqlCmd.ExecuteReader();
                     }
                     if (liczba_wierszu == 1)
                     {
-                        sqlCmd.CommandText = "update Produkt set Aktualnosc='aktualny where Opis_produktu='" + Tekst_Menu_Opis.Text + "', and Cena_produktu= " + decimal.Parse(Tekst_Menu_Cena.Text+" and Id_menu="+ id_menu);
+                      
+                        string temp  = "update Produkt set Aktualnosc='aktualny' where Opis_produktu='" + Tekst_Menu_Opis.Text + "' and Cena_produktu= " + result + " and Id_menu=" + id_menu;
+                        sqlCmd.CommandText = temp;
                         sqlCmd.ExecuteReader();
 
                     }
@@ -140,6 +145,44 @@ namespace Restauracja
            
         }
 
+        private void Przycisk_Menu_Usun_Click(object sender, RoutedEventArgs e)
+        {
+            SqlConnection sqlConn = new SqlConnection("Server = LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
+
+            sqlConn.Open();
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.Connection = sqlConn;
+
+            DataRowView row = (DataRowView)Dane_Menu.SelectedItem;
+
+            if (row != null)
+            {
+
+
+                string alter = "Select Count(*) From Pozycja_zamowienia as P Join Produkt as S on P.Id_produktu=S.Id_produktu Where S.Opis_produktu='" + row[0].ToString() + "' and S.Cena_produktu=" + row[1].ToString().Replace(",",".");
+                sqlCmd.CommandText = alter;
+                int liczba_wierszu = (int)sqlCmd.ExecuteScalar();
+                if (liczba_wierszu == 0)
+                {
+                    sqlCmd.CommandText = "Delete From Produkt Where Opis_produktu = '" + row[0].ToString() + "' and Cena_produktu = " + row[1].ToString().Replace(",", ".");
+                    sqlCmd.ExecuteReader();
+
+                }
+                if (liczba_wierszu >= 1)
+                {
+
+                   
+
+                }
+                sqlConn.Close();
+
+                wyswietlMenu();
+
+                
+            }
+        }
+
+
         private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -151,7 +194,7 @@ namespace Restauracja
             if (comboBox.Items.Count > 0) comboBox.Items.Clear();
                 
             string Sql = "select Opis from Menu";
-            SqlConnection conn = new SqlConnection("Server = LocalHost;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection conn = new SqlConnection("Server = LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
             conn.Open();
             SqlCommand cmd = new SqlCommand(Sql, conn);
             SqlDataReader DR = cmd.ExecuteReader();
@@ -172,7 +215,7 @@ namespace Restauracja
 
         public void wyswietlMenu()
         {
-            SqlConnection sqlConn = new SqlConnection("Server = LocalHost;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection sqlConn = new SqlConnection("Server = LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
 
             sqlConn.Open();
             SqlCommand sqlCmd = new SqlCommand();
@@ -206,5 +249,7 @@ namespace Restauracja
         {
 
         }
+
+        
     }
 }
