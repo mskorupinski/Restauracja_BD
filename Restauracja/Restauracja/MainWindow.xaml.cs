@@ -113,15 +113,28 @@ namespace Restauracja
             }
             else
             {
-                sqlCmd.CommandText = "Select Id_menu from Menu where Opis = '" + comboBox.Text + "'";
-                int id_menu = (int)sqlCmd.ExecuteScalar();
-                sqlCmd.CommandText = "insert into Produkt (Opis_produktu, Cena_produktu, Id_menu) Values('" + Tekst_Menu_Opis.Text + "'," + Int32.Parse(Tekst_Menu_Cena.Text) + "," + id_menu + ");";
-                sqlCmd.ExecuteReader();
-                sqlConn.Close();
+                if (Tekst_Menu_Cena.Text != "")
+                {
+                    sqlCmd.CommandText = "Select Id_menu from Menu where Opis = '" + comboBox.Text + "'";
+                    int id_menu = (int)sqlCmd.ExecuteScalar();
+                    sqlCmd.CommandText = "Select * from Produkt where Opis_produktu = '" + Tekst_Menu_Opis.Text + "' and Cena_produktu=" + decimal.Parse(Tekst_Menu_Cena.Text) + " and Aktualnosc='nieaktualny';";
+                    int liczba_wierszu = sqlCmd.ExecuteNonQuery();
+                    if (liczba_wierszu == 0)
+                    {
+                        sqlCmd.CommandText = "insert into Produkt (Opis_produktu, Cena_produktu, Id_menu,Aktualnosc) Values('" + Tekst_Menu_Opis.Text + "'," + decimal.Parse(Tekst_Menu_Cena.Text) + "," + id_menu + ", 'aktualny');";
+                        sqlCmd.ExecuteReader();
+                    }
+                    if (liczba_wierszu == 1)
+                    {
+                        sqlCmd.CommandText = "update Produkt set Aktualnosc='aktualny where Opis_produktu='" + Tekst_Menu_Opis.Text + "', and Cena_produktu= " + decimal.Parse(Tekst_Menu_Cena.Text+" and Id_menu="+ id_menu);
+                        sqlCmd.ExecuteReader();
 
-                wyswietlMenu();
+                    }
+                    sqlConn.Close();
 
+                    wyswietlMenu();
 
+                }
             }
 
            
@@ -138,7 +151,7 @@ namespace Restauracja
             if (comboBox.Items.Count > 0) comboBox.Items.Clear();
                 
             string Sql = "select Opis from Menu";
-            SqlConnection conn = new SqlConnection("Data Source=LAPTOP-PMVJTLEG\\SQLSTANDARD;Network Library=dbmssocn;Initial Catalog = RESTAURACJA; User ID = marcin ;Password = marcin;");
+            SqlConnection conn = new SqlConnection("Server = LocalHost;Integrated Security = SSPI; Database = 'Restauracja'");
             conn.Open();
             SqlCommand cmd = new SqlCommand(Sql, conn);
             SqlDataReader DR = cmd.ExecuteReader();
@@ -168,7 +181,7 @@ namespace Restauracja
 
             Tekst_Menu_Cena.Text = "";
             Tekst_Menu_Opis.Text = "";
-            sqlCmd.CommandText = "select Opis_produktu as Opis , Cena_produktu as Cena  from Produkt as p join  Menu as m on p.Id_menu=m.Id_menu where m.Opis='" + comboBox.Text + "'";
+            sqlCmd.CommandText = "select Opis_produktu as Opis , Cena_produktu as Cena  from Produkt as p join  Menu as m on p.Id_menu=m.Id_menu where m.Opis='" + comboBox.Text + "' and p.Aktualnosc='aktualny'";
 
             dataReader = sqlCmd.ExecuteReader();
 
@@ -182,6 +195,16 @@ namespace Restauracja
             }
 
             sqlConn.Close();
+        }
+
+        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void Tekst_Menu_Cena_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
         }
     }
 }

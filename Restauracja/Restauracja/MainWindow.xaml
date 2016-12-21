@@ -77,15 +77,15 @@
                             <ColumnDefinition Width="229*"/>
                             <ColumnDefinition Width="65*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="Tekst_Menu_Cena" HorizontalAlignment="Left" Height="23" Margin="369,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Tekst_Menu_Cena_PreviewTextInput" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="Tekst_Menu_Cena" HorizontalAlignment="Left" Height="23" Margin="369,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Tekst_Menu_Cena_PreviewTextInput" Grid.ColumnSpan="2" TextChanged="Tekst_Menu_Cena_TextChanged"/>
                         <TextBox x:Name="Tekst_Menu_Opis" HorizontalAlignment="Left" Height="23" Margin="369,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
                         <Label x:Name="Etykieta_Menu_Nr" Content="Nr menu" HorizontalAlignment="Left" Margin="369,26,0,0" VerticalAlignment="Top"/>
                         <Label x:Name="Etykieta_Menu_Cena" Content="Cena" HorizontalAlignment="Left" Margin="369,80,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="Etykieta_Menu_Opis" Content="Opis" HorizontalAlignment="Left" Margin="372,127,0,0" VerticalAlignment="Top"/>
+                        <Label x:Name="Etykieta_Menu_Opis" Content="Opis" HorizontalAlignment="Left" Margin="369,127,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.339,0.406"/>
                         <Button x:Name="Przycisk_Menu_Szukaj" Content="Usuń" HorizontalAlignment="Left" Margin="372,214,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Menu_Szukaj_Click"/>
                         <DataGrid x:Name="Dane_Menu" HorizontalAlignment="Left" Margin="29,21,0,0" VerticalAlignment="Top" Height="240" Width="311" IsReadOnly="True" ColumnWidth="*" FrozenColumnCount="1"/>
                         <Button x:Name="Przycisk_Menu_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="18.8,214,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Menu_Dodaj_Click" Grid.Column="1"/>
-                        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="372,53,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="comboBox_DropDownOpened" DropDownClosed="comboBox_DropDownClosed" Grid.ColumnSpan="2"/>
+                        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="369,52,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="comboBox_DropDownOpened" DropDownClosed="comboBox_DropDownClosed" Grid.ColumnSpan="2" SelectionChanged="comboBox_SelectionChanged"/>
                     </Grid>
                 </TabItem>
                 <TabItem>
