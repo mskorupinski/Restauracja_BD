@@ -96,7 +96,7 @@ namespace Restauracja
 
         private void Przycisk_Menu_Dodaj_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection sqlConn = new SqlConnection("Server = E540;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection sqlConn = new SqlConnection("Server = LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
 
             sqlConn.Open();
             SqlCommand sqlCmd = new SqlCommand();
@@ -147,7 +147,7 @@ namespace Restauracja
 
         private void Przycisk_Menu_Usun_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection sqlConn = new SqlConnection("Server =E540;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection sqlConn = new SqlConnection("Server =LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
 
             sqlConn.Open();
             SqlCommand sqlCmd = new SqlCommand();
@@ -159,7 +159,7 @@ namespace Restauracja
             {
 
 
-                string alter = "Select Count(*) From Pozycja_zamowienia as P Join Produkt as S on P.Id_produktu=S.Id_produktu Where S.Opis_produktu='" + row[0].ToString() + "' and S.Cena_produktu=" + row[1].ToString().Replace(",",".");
+                string alter = "Select Count(*) from Pozycja_Produkt where Opis ='" + row[0].ToString() + "' and Cena =" + row[1].ToString().Replace(",", ".");
                 sqlCmd.CommandText = alter;
                 int liczba_wierszu = (int)sqlCmd.ExecuteScalar();
                 if (liczba_wierszu == 0)
@@ -195,7 +195,7 @@ namespace Restauracja
             if (comboBox.Items.Count > 0) comboBox.Items.Clear();
                 
             string Sql = "select Opis from Menu";
-            SqlConnection conn = new SqlConnection("Server = E540;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection conn = new SqlConnection("Server = LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
             conn.Open();
             SqlCommand cmd = new SqlCommand(Sql, conn);
             SqlDataReader DR = cmd.ExecuteReader();
@@ -216,7 +216,7 @@ namespace Restauracja
 
         public void wyswietlMenu()
         {
-            SqlConnection sqlConn = new SqlConnection("Server = E540;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection sqlConn = new SqlConnection("Server = LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
 
             sqlConn.Open();
             SqlCommand sqlCmd = new SqlCommand();
@@ -225,7 +225,7 @@ namespace Restauracja
 
             Tekst_Menu_Cena.Text = "";
             Tekst_Menu_Opis.Text = "";
-            sqlCmd.CommandText = "select Opis_produktu as Opis , Cena_produktu as Cena  from Produkt as p join  Menu as m on p.Id_menu=m.Id_menu where m.Opis='" + comboBox.Text + "' and p.Aktualnosc='aktualny'";
+            sqlCmd.CommandText = "select Opis, Cena from Wyswietl_Menu where Rodzaj='" + comboBox.Text + "'";
 
             dataReader = sqlCmd.ExecuteReader();
 

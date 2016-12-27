@@ -41,7 +41,7 @@
                             <TextBlock Text="Rezerwacja" Margin="2,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
                     </TabItem.Header>
-                    <Grid Background="#FFE5E5E5" Margin="0,-2,0,1.6">
+                    <Grid Background="#FFE5E5E5" Margin="20,-2,-20,1.4">
                         <Label x:Name="Etykieta_Rezerwacja_Imie" Content="Imię" HorizontalAlignment="Left" Margin="289,10,0,0" VerticalAlignment="Top"/>
                         <TextBox x:Name="Tekst_Rezerwacja_Imie" HorizontalAlignment="Left" Height="23" Margin="289,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                         <Label x:Name="Etykieta_Rezerwacja_Nazwisko" Content="Nazwisko" HorizontalAlignment="Left" Margin="289,69,0,0" VerticalAlignment="Top"/>
@@ -59,8 +59,8 @@
                         <Label x:Name="Etykieta_Rezerwacja_Czas" Content="Czas rezerwacji" HorizontalAlignment="Left" Margin="426,69,0,0" VerticalAlignment="Top"/>
                         <Label x:Name="Etykieta_Rezerwacja_Data_Copy1" Content="Okres rezerwacji" HorizontalAlignment="Left" Margin="432,128,0,0" VerticalAlignment="Top"/>
                         <Label x:Name="Etykieta_Rezerwacja_Stolik" Content="Numer stolika" HorizontalAlignment="Left" Margin="432,189,0,0" VerticalAlignment="Top"/>
-                        <Button x:Name="Przycisk_Rezerwacja_Dodaj" Content="Dodaj rezerwację" HorizontalAlignment="Left" Margin="289,263,0,0" VerticalAlignment="Top" Width="120" Height="19"/>
-                        <Button x:Name="Przycisk_Rezerwacja_Wyswietl" Content="Wyświetl" HorizontalAlignment="Left" Margin="430,263,0,0" VerticalAlignment="Top" Width="120" Height="19"/>
+                        <Button x:Name="Przycisk_Rezerwacja_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="289,263,0,0" VerticalAlignment="Top" Width="120" Height="19"/>
+                        <Button x:Name="Przycisk_Rezerwacja_Usun" Content="Usuń" HorizontalAlignment="Left" Margin="430,263,0,0" VerticalAlignment="Top" Width="120" Height="19"/>
 
                     </Grid>
 
@@ -104,7 +104,7 @@
                         <TextBox x:Name="Tekst_Pracownicy_Nazwisko" HorizontalAlignment="Left" Height="23" Margin="343,140,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                         <TextBox x:Name="Tekst_Pracownicy_Stanowisko" HorizontalAlignment="Left" Height="23" Margin="343,204,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                         <Button x:Name="Przycisk_Pracownicy_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="300,247,0,0" VerticalAlignment="Top" Width="75"/>
-                        <Button x:Name="Przycisk_Pracownicy_Wyswietl" Content="Wyświetl" HorizontalAlignment="Left" Margin="388,247,0,0" VerticalAlignment="Top" Width="75"/>
+                        <Button x:Name="Przycisk_Pracownicy_Usun" Content="Usuń" HorizontalAlignment="Left" Margin="388,247,0,0" VerticalAlignment="Top" Width="75"/>
                         <Button x:Name="Przycisk_Pracownicy_Edytuj" Content="Edytuj" HorizontalAlignment="Left" Margin="479,247,0,0" VerticalAlignment="Top" Width="75"/>
 
                     </Grid>
