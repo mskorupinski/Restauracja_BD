@@ -28,11 +28,11 @@ namespace Restauracja
         {
             InitializeComponent();
         }
-
+        private String serwer = "E540";
         private void Zaloguj_Sie_Click(object sender, RoutedEventArgs e)
         {
              logowanie = new dane();
-            SqlConnection sqlConn = new SqlConnection("Data Source=LAPTOP-PMVJTLEG\\SQLSTANDARD;Network Library=dbmssocn;Initial Catalog = RESTAURACJA; User ID = " + Text_Logowanie.Text + ";Password = " + Text_Haslo.Password + ";");
+            SqlConnection sqlConn = new SqlConnection("Data Source="+serwer+";Network Library=dbmssocn;Initial Catalog = RESTAURACJA; User ID = " + Text_Logowanie.Text + ";Password = " + Text_Haslo.Password + ";");
             try
             {
 
@@ -96,7 +96,7 @@ namespace Restauracja
 
         private void Przycisk_Menu_Dodaj_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection sqlConn = new SqlConnection("Server = LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection sqlConn = new SqlConnection("Server = "+serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
 
             sqlConn.Open();
             SqlCommand sqlCmd = new SqlCommand();
@@ -147,7 +147,7 @@ namespace Restauracja
 
         private void Przycisk_Menu_Usun_Click(object sender, RoutedEventArgs e)
         {
-            SqlConnection sqlConn = new SqlConnection("Server =LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection sqlConn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
 
             sqlConn.Open();
             SqlCommand sqlCmd = new SqlCommand();
@@ -184,18 +184,14 @@ namespace Restauracja
         }
 
 
-        private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-
-
-        }
+     
 
         private void comboBox_DropDownOpened(object sender, EventArgs e)
         {
             if (comboBox.Items.Count > 0) comboBox.Items.Clear();
                 
             string Sql = "select Opis from Menu";
-            SqlConnection conn = new SqlConnection("Server = LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection conn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
             conn.Open();
             SqlCommand cmd = new SqlCommand(Sql, conn);
             SqlDataReader DR = cmd.ExecuteReader();
@@ -216,7 +212,7 @@ namespace Restauracja
 
         public void wyswietlMenu()
         {
-            SqlConnection sqlConn = new SqlConnection("Server = LAPTOP-PMVJTLEG\\SQLSTANDARD;Integrated Security = SSPI; Database = 'Restauracja'");
+            SqlConnection sqlConn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
 
             sqlConn.Open();
             SqlCommand sqlCmd = new SqlCommand();
@@ -241,6 +237,34 @@ namespace Restauracja
             sqlConn.Close();
         }
 
+        public void wyswietlStolik()
+        {
+            SqlConnection sqlConn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+
+            sqlConn.Open();
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.Connection = sqlConn;
+            SqlDataReader dataReader = null;
+            
+            Tekst_Stoliki_Numer.Text = "";
+            Tekst_Stoliki_Miejsca.Text = "";
+            sqlCmd.CommandText = "select Numer, Miejsca from Wyswietl_Stolik where not Numer=0";
+
+            dataReader = sqlCmd.ExecuteReader();
+
+            if (dataReader != null)
+            {
+                DataTable dt = new DataTable();
+                dt.Load(dataReader);
+                Dane_Stoliki.ItemsSource = dt.DefaultView;
+
+                dataReader.Close();
+            }
+
+            sqlConn.Close();
+        }
+       
+
         private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
@@ -251,6 +275,205 @@ namespace Restauracja
 
         }
 
-        
+        private void Tekst_Stoliki_Numer_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!char.IsDigit(e.Text, e.Text.Length - 1))
+                e.Handled = true;
+           
+        }
+
+        private void Tekst_Stoliki_Miejsca_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!char.IsDigit(e.Text, e.Text.Length - 1))
+                e.Handled = true;
+        }
+
+        private void Przycisk_Stoliki_Dodaj_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tekst_Stoliki_Numer.Text == "" || Convert.ToInt32(Tekst_Stoliki_Numer.Text) == 0)
+            {
+                MessageBox.Show("Nie podano numeru stolika", "Błąd");
+            }
+            else if (Tekst_Stoliki_Miejsca.Text == "" || Convert.ToInt32(Tekst_Stoliki_Miejsca.Text) == 0)
+            {
+                MessageBox.Show("Nie podano ilości miejsc", "Błąd");
+            }
+            else
+            {
+                SqlConnection sqlConn = new SqlConnection("Server= " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+
+                sqlConn.Open();
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.Connection = sqlConn;
+
+
+
+
+                string alter = "Select Count(*) from Stolik where Numer_stolika =" + Tekst_Stoliki_Numer.Text.ToString();
+                sqlCmd.CommandText = alter;
+                int liczba_wierszu = (int)sqlCmd.ExecuteScalar();
+                if (liczba_wierszu == 0)
+                {
+                    sqlCmd.CommandText = "insert into Stolik (Ilosc_miejsc, Numer_stolika) Values(" + Tekst_Stoliki_Miejsca.Text.ToString() + "," + Tekst_Stoliki_Numer.Text.ToString() + ")";
+                    sqlCmd.ExecuteReader();
+
+                }
+                if (liczba_wierszu >= 1)
+                {
+                    MessageBox.Show("Stolik o podanym numerze już istnieje","Błąd");
+
+                }
+                wyswietlStolik();
+                sqlConn.Close();
+
+            }
+
+            }
+
+        private void Przycisk_Stoliki_Usun_Click(object sender, RoutedEventArgs e) // trzeba sprawdzić na danych z rezerwacja bez rezerwacji 
+        {
+
+            SqlConnection sqlConn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+
+            sqlConn.Open();
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.Connection = sqlConn;
+
+            DataRowView row = (DataRowView)Dane_Stoliki.SelectedItem;
+
+            if (row != null)
+            {
+
+
+                DateTime pora = DateTime.Now;
+                string alter = "Select Count(*) from Stolik_Rezerwacja where Numer =" + row[0].ToString() + " and Data>='" + pora.Year + "-" + pora.Month + "-" + pora.Day + "' and Czas>='" + pora.Hour + ":" + pora.Minute + ":" + pora.Second+"'";
+                sqlCmd.CommandText = alter;
+                int liczba_wierszy = (int)sqlCmd.ExecuteScalar();
+                //jeżeli istnieje rezerwacja na kolejne dni nie mozna usunąć 
+                if (liczba_wierszy == 0)
+                {
+                    //zlicza czy kiedykolwiek byla rezerwacja na ten stolik
+                    string alter3 = "Select Count(*) from Stolik_Rezerwacja where Numer =" + row[0].ToString() + " and Data<'" + pora.Year + "-" + pora.Month + "-" + pora.Day + "' and Czas>='" + pora.Hour + ":" + pora.Minute + ":" +pora.Second+"'";
+                    sqlCmd.CommandText = alter3;
+                    int liczba_wierszy3 = (int)sqlCmd.ExecuteScalar();
+                    alter = "Select Count(*) from Stolik_Zamowienie where Numer =" + row[0].ToString();
+                    sqlCmd.CommandText = alter;
+                    int liczba_wierszy2 = (int)sqlCmd.ExecuteScalar();
+                    liczba_wierszy2 += liczba_wierszy3;
+                    //jezeli nie bylo rezerwacji dla tego stolika ani nie przyszedl klient bez rezerwacji  mozna usunac 
+                    if (liczba_wierszy2 == 0)
+                    {
+                        sqlCmd.CommandText = "delete Stolik where Numer_stolika = " + row[0].ToString();
+                        sqlCmd.ExecuteReader();
+                    }
+                    // jezeli byla kiedy rezerwacja albo przyszedl klient bez stolika to nie tracimy informacji o liczbie miejsc
+                    else if (liczba_wierszy2 >= 1)
+                    {
+
+                        string temp = "update Stolik set Numer_stolika = 0 where Numer_stolika= " + row[0].ToString();
+                        sqlCmd.CommandText = temp;
+                        sqlCmd.ExecuteReader();
+                    }
+                }
+                else
+                {
+
+                    MessageBox.Show("Stolik zarezerwowany-nie można go usunąć", "Błąd");
+
+                }
+
+
+                }
+                else
+                {
+
+                    MessageBox.Show("Wybierz stolik", "Błąd");
+
+                }
+                wyswietlStolik();
+                sqlConn.Close();
+
+
+
+            
+
+
+        }
+
+        private void Przycisk_Stoliki_Edytuj_Click(object sender, RoutedEventArgs e)
+        {
+            SqlConnection sqlConn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+
+            sqlConn.Open();
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.Connection = sqlConn;
+
+            DataRowView row = (DataRowView)Dane_Stoliki.SelectedItem;
+
+            if (row != null)
+            {
+
+                if (Tekst_Stoliki_Numer.Text == "" || Tekst_Stoliki_Numer.Text == "0") { MessageBox.Show("Nie podano numeru", "Błąd"); }
+
+
+
+                else
+                {
+
+                    DateTime pora = DateTime.Now;
+                    string alter = "Select Count(*) from Wyswietl_Stolik where Numer =" + Tekst_Stoliki_Numer.Text; 
+                    sqlCmd.CommandText = alter;
+                    int liczba_wierszy = (int)sqlCmd.ExecuteScalar();
+                    if (liczba_wierszy == 0)
+                    {
+                        
+
+                            string temp = "update Stolik set Numer_stolika = "+ Tekst_Stoliki_Numer.Text+" where Numer_stolika= " + row[0].ToString();
+                            sqlCmd.CommandText = temp;
+                            sqlCmd.ExecuteReader();
+                        
+                    }
+                    else
+                    {
+
+                        MessageBox.Show("Istenie już stolik o podanym numerze", "Błąd");
+
+                    }
+
+
+
+
+
+
+                }
+
+            }
+                else
+                {
+
+                    MessageBox.Show("Wybierz stolik", "Błąd");
+
+                }
+                wyswietlStolik();
+                sqlConn.Close();
+
+
+
+            }
+
+        private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+            TabControl tabControl = sender as TabControl; // e.Source could have been used instead of sender as well
+            TabItem item = tabControl.SelectedValue as TabItem;
+            if (item.Name == "stolik")
+            {
+                wyswietlStolik();
+            }
+
+
+        }
     }
-}
+    }
+    
+
