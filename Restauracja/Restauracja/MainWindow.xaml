@@ -23,13 +23,13 @@
             <Button x:Name="Zaloguj_Sie" Content="Zaloguj się" HorizontalAlignment="Left" Margin="262,222,0,0" VerticalAlignment="Top" Width="75" Click="Zaloguj_Sie_Click" IsDefault="True"/>
         </Grid>
         <Grid x:Name="Panel" HorizontalAlignment="Left" Height="321" Margin="0,0,-0.4,-0.2" VerticalAlignment="Top" Width="594" Grid.ColumnSpan="2" Grid.RowSpan="2">
-            <TabControl x:Name="tabControl" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" UseLayoutRounding="True" Margin="0,0,0,-48" Height="369" VerticalAlignment="Top" SelectionChanged="tabControl_SelectionChanged">
+            <TabControl x:Name="tabControl" VerticalContentAlignment="Stretch" HorizontalContentAlignment="Stretch" UseLayoutRounding="True" Margin="0,0,0,-48" Height="369" VerticalAlignment="Top">
                 <TabItem>
 
                     <TabItem.Header>
                         <StackPanel Orientation="Horizontal">
                             <Image Height="32" Source="talerz.png" Width="32"/>
-                            <TextBlock Text="Zamówienie" Margin="2,0,0,0" VerticalAlignment="Center" />
+                            <TextBlock Text="Zamówienie" Margin="2,10,0,0" VerticalAlignment="Top" />
                         </StackPanel>
                     </TabItem.Header>
 
@@ -41,7 +41,7 @@
                             <TextBlock Text="Rezerwacja" Margin="2,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
                     </TabItem.Header>
-                    <Grid Background="#FFE5E5E5" Margin="20,-2,-20,1.4">
+                    <Grid Background="#FFE5E5E5" Margin="0,-2,0,1.4">
                         <Label x:Name="Etykieta_Rezerwacja_Imie" Content="Imię" HorizontalAlignment="Left" Margin="289,10,0,0" VerticalAlignment="Top"/>
                         <TextBox x:Name="Tekst_Rezerwacja_Imie" HorizontalAlignment="Left" Height="23" Margin="289,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
                         <Label x:Name="Etykieta_Rezerwacja_Nazwisko" Content="Nazwisko" HorizontalAlignment="Left" Margin="289,69,0,0" VerticalAlignment="Top"/>
@@ -84,33 +84,38 @@
                         <Label x:Name="Etykieta_Menu_Cena" Content="Cena" HorizontalAlignment="Left" Margin="5.2,80,0,0" VerticalAlignment="Top" Grid.Column="1"/>
                         <Label x:Name="Etykieta_Menu_Opis" Content="Opis" HorizontalAlignment="Left" Margin="5.2,127,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.339,0.406" Grid.Column="1"/>
                         <Button x:Name="Przycisk_Menu_Usun" Content="Usuń" HorizontalAlignment="Left" Margin="8.2,214,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Menu_Usun_Click" Grid.Column="1"/>
-                        <DataGrid x:Name="Dane_Menu" HorizontalAlignment="Left" Margin="29,21,0,0" VerticalAlignment="Top" Height="240" Width="311" IsReadOnly="True" ColumnWidth="*" FrozenColumnCount="1"/>
+                        <DataGrid x:Name="Dane_Menu" HorizontalAlignment="Left" Margin="29,21,0,0" VerticalAlignment="Top" Height="240" Width="311" IsReadOnly="True" ColumnWidth="*" FrozenColumnCount="1" CanUserDeleteRows="False"/>
                         <Button x:Name="Przycisk_Menu_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="18.4,214,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Menu_Dodaj_Click" Grid.Column="2"/>
-                        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="5.2,52,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="comboBox_DropDownOpened" DropDownClosed="comboBox_DropDownClosed" Grid.ColumnSpan="2" SelectionChanged="comboBox_SelectionChanged" Grid.Column="1"/>
+                        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="5.2,52,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="comboBox_DropDownOpened" DropDownClosed="comboBox_DropDownClosed" Grid.ColumnSpan="2" Grid.Column="1"/>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="Pracownicy">
                     <TabItem.Header>
-                        <StackPanel Orientation="Horizontal">
+                        <StackPanel Orientation="Horizontal" Height="36" Margin="0,0,-0.4,0" VerticalAlignment="Top">
                             <Image Height="32" Source="talerz.png" Width="32"/>
-                            <TextBlock Text="Pracownicy" Margin="2,0,0,0" VerticalAlignment="Center" />
+                            <TextBlock Margin="2,0,0,0" VerticalAlignment="Center" ><Run Text="Pracownicy"/></TextBlock>
                         </StackPanel>
                     </TabItem.Header>
                     <Grid Background="#FFE5E5E5">
-                        <Label x:Name="Etykieta_Pracownicy_Imie" Content="Imię" HorizontalAlignment="Left" Margin="342,40,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="Etykieta_Pracownicy_Nazwisko" Content="Nazwisko" HorizontalAlignment="Left" Margin="314,81,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="Etykieta_Pracownicy_Stanowisko" Content="Stanowisko" HorizontalAlignment="Left" Margin="305,122,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="Tekst_Pracownicy_Imie" HorizontalAlignment="Left" Height="23" Margin="388,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        <TextBox x:Name="Tekst_Pracownicy_Nazwisko" HorizontalAlignment="Left" Height="23" Margin="388,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        <Button x:Name="Przycisk_Pracownicy_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="300,247,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Pracownicy_Dodaj_Click"/>
-                        <Button x:Name="Przycisk_Pracownicy_Usun" Content="Usuń" HorizontalAlignment="Left" Margin="388,247,0,0" VerticalAlignment="Top" Width="75"/>
-                        <Button x:Name="Przycisk_Pracownicy_Edytuj" Content="Edytuj" HorizontalAlignment="Left" Margin="479,247,0,0" VerticalAlignment="Top" Width="75"/>
-                        <ComboBox x:Name="comboBox_Pracownicy" HorizontalAlignment="Left" Margin="388,122,0,0" VerticalAlignment="Top" Width="120"/>
-                        <TextBox x:Name="Tekst_Pracownicy_Haslo" HorizontalAlignment="Left" Height="23" Margin="388,202,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        <Label x:Name="Etykieta_Pracownicy_Haslo" Content="Hasło" HorizontalAlignment="Left" Margin="334,199,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="Tekst_Pracownicy_Login" HorizontalAlignment="Left" Height="23" Margin="388,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        <Label x:Name="Etykieta_Pracownicy_Login" Content="Login" HorizontalAlignment="Left" Margin="334,162,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.545,-0.055"/>
-                        <DataGrid x:Name="Dane_Pracownicy" HorizontalAlignment="Left" Margin="29,40,0,0" VerticalAlignment="Top" Height="226" Width="266" IsReadOnly="True" ColumnWidth="*" FrozenColumnCount="1"/>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="267*"/>
+                            <ColumnDefinition Width="173*"/>
+                            <ColumnDefinition Width="148*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="Etykieta_Pracownicy_Imie" Content="Imię" HorizontalAlignment="Left" Margin="74.8,40,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                        <Label x:Name="Etykieta_Pracownicy_Nazwisko" Content="Nazwisko" HorizontalAlignment="Left" Margin="46.8,81,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                        <Label x:Name="Etykieta_Pracownicy_Stanowisko" Content="Stanowisko" HorizontalAlignment="Left" Margin="37.8,122,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                        <TextBox x:Name="Tekst_Pracownicy_Imie" HorizontalAlignment="Left" Height="23" Margin="120.8,40,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="Tekst_Pracownicy_Nazwisko" HorizontalAlignment="Left" Height="23" Margin="120.8,81,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2"/>
+                        <Button x:Name="Przycisk_Pracownicy_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="32.8,247,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Pracownicy_Dodaj_Click" Grid.Column="1"/>
+                        <Button x:Name="Przycisk_Pracownicy_Usun" Content="Usuń" HorizontalAlignment="Left" Margin="120.8,247,0,0" VerticalAlignment="Top" Width="75" Grid.Column="1" Grid.ColumnSpan="2" Click="Przycisk_Pracownicy_Usun_Click"/>
+                        <Button x:Name="Przycisk_Pracownicy_Edytuj" Content="Edytuj" HorizontalAlignment="Left" Margin="39,247,0,0" VerticalAlignment="Top" Width="75" Grid.Column="2" Click="Przycisk_Pracownicy_Edytuj_Click"/>
+                        <ComboBox x:Name="comboBox_Pracownicy" HorizontalAlignment="Left" Margin="120.8,122,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="Tekst_Pracownicy_Haslo" HorizontalAlignment="Left" Height="23" Margin="120.8,202,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2"/>
+                        <Label x:Name="Etykieta_Pracownicy_Haslo" Content="Hasło" HorizontalAlignment="Left" Margin="66.8,199,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                        <TextBox x:Name="Tekst_Pracownicy_Login" HorizontalAlignment="Left" Height="23" Margin="120.8,162,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.ColumnSpan="2"/>
+                        <Label x:Name="Etykieta_Pracownicy_Login" Content="Login" HorizontalAlignment="Left" Margin="66.8,162,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.545,-0.055" Grid.Column="1"/>
+                        <DataGrid x:Name="Dane_Pracownicy" HorizontalAlignment="Left" Margin="29,40,0,0" VerticalAlignment="Top" Height="226" Width="253" ColumnWidth="*" FrozenColumnCount="1" IsReadOnly="True" Grid.ColumnSpan="2" SelectedCellsChanged="Dane_Pracownicy_SelectedCellsChanged"/>
 
                     </Grid>
                 </TabItem>
@@ -122,7 +127,7 @@
                         </StackPanel>
                     </TabItem.Header>
                     <Grid Background="#FFE5E5E5" Margin="0,-1,0,1">
-                        <DataGrid x:Name="Dane_Stoliki" HorizontalAlignment="Left" Margin="24,29,0,0" VerticalAlignment="Top" Height="231" Width="221" IsReadOnly="True"/>
+                        <DataGrid x:Name="Dane_Stoliki" HorizontalAlignment="Left" Margin="24,29,0,0" VerticalAlignment="Top" Height="231" Width="221" IsReadOnly="True" ColumnWidth="*" FrozenColumnCount="1"/>
                         <Label x:Name="Etykieta_Stoliki_Miejsca" Content="Ilość miejsc" HorizontalAlignment="Left" Margin="290,118,0,0" VerticalAlignment="Top"/>
                         <TextBox x:Name="Tekst_Stoliki_Miejsca" HorizontalAlignment="Left" Height="23" Margin="391,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.458,0.218" PreviewTextInput="Tekst_Stoliki_Miejsca_PreviewTextInput"/>
                         <Button x:Name="Przycisk_Stoliki_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="290,241,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Stoliki_Dodaj_Click"/>

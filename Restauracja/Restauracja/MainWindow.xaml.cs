@@ -28,6 +28,9 @@ namespace Restauracja
         {
             InitializeComponent();
             wypelnijStanowiska();
+            wyswietlStolik();
+            wyswietlPracownicy();
+
         }
         private String serwer = "LAPTOP-PMVJTLEG\\SQLSTANDARD";
         private void Zaloguj_Sie_Click(object sender, RoutedEventArgs e)
@@ -266,10 +269,7 @@ namespace Restauracja
         }
        
 
-        private void comboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
-        }
 
         private void Tekst_Menu_Cena_TextChanged(object sender, TextChangedEventArgs e)
         {
@@ -457,27 +457,12 @@ namespace Restauracja
 
             }
 
-        private void tabControl_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
 
-            TabControl tabControl = sender as TabControl; // e.Source could have been used instead of sender as well
-            TabItem item = tabControl.SelectedValue as TabItem;
-            if (item.Name == "stolik")
-            {
-                wyswietlStolik();
-            }
-            if (item.Name == "Pracownicy")
-            {
-                
-                wyswietlPracownicy();
-            }
-
-
-        }
 
         public void wypelnijStanowiska()
         {
             comboBox_Pracownicy.Items.Add("Kelner");
+            comboBox_Pracownicy.Items.Add("Kelnerka");
             comboBox_Pracownicy.Items.Add("Menager");
             comboBox_Pracownicy.Items.Add("Pomoc kuchenna");
             comboBox_Pracownicy.Items.Add("Kucharz");
@@ -529,6 +514,10 @@ namespace Restauracja
             {
                 MessageBox.Show("Nie wybrano stanowiska", "Błąd");
             }
+            else if(Tekst_Pracownicy_Login.Text == "")
+            {
+                MessageBox.Show("Nie podano loginu", "Błąd");
+            }
             else
             {
                 SqlConnection sqlConn = new SqlConnection("Server= " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
@@ -562,7 +551,84 @@ namespace Restauracja
 
             }
         }
+
+        private void Przycisk_Pracownicy_Usun_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void Przycisk_Pracownicy_Edytuj_Click(object sender, RoutedEventArgs e)
+        {
+            SqlConnection sqlConn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+
+            sqlConn.Open();
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.Connection = sqlConn;
+
+            DataRowView row = (DataRowView)Dane_Pracownicy.SelectedItem;
+
+            if (row != null)
+            {
+
+
+                if (Tekst_Pracownicy_Imie.Text == "")
+                {
+                    MessageBox.Show("Nie podano imienia.", "Błąd");
+                }
+                else if (Tekst_Pracownicy_Nazwisko.Text == "")
+                {
+                    MessageBox.Show("Nie podano nazwiska", "Błąd");
+                }
+                
+                else if (comboBox_Pracownicy.Text == "")
+                {
+                    MessageBox.Show("Nie wybrano stanowiska", "Błąd");
+                }
+                else
+                {
+
+                    string temp = "update Pracownik set Imie = '" + Tekst_Pracownicy_Imie.Text + "', Nazwisko = '" + Tekst_Pracownicy_Nazwisko.Text + "', Stanowisko = '" + comboBox_Pracownicy.Text + "'" +
+                    " where Imie = '" + row[0].ToString() + "' and Nazwisko= '" + row[1].ToString() + "' and Stanowisko = '" + row[2].ToString() + "'"; 
+                        sqlCmd.CommandText = temp;
+                        sqlCmd.ExecuteReader();
+                         Tekst_Pracownicy_Imie.Text = "";
+                         Tekst_Pracownicy_Nazwisko.Text = "";
+                    comboBox_Pracownicy.Text = "";
+
+                }
+
+            }
+            else
+            {
+
+                MessageBox.Show("Wybierz pracownika", "Błąd");
+
+            }
+            wyswietlPracownicy();
+            sqlConn.Close();
+
+
+        }
+
+
+
+        private void Dane_Pracownicy_SelectedCellsChanged(object sender, SelectedCellsChangedEventArgs e)
+        {
+
+            DataRowView row = (DataRowView)Dane_Pracownicy.SelectedItem;
+            if (row != null)
+            {
+                string temp1 = row[0].ToString();
+                string temp2 = row[1].ToString();
+                string temp3 = row[2].ToString();
+
+                Tekst_Pracownicy_Imie.Text = temp1;
+                Tekst_Pracownicy_Nazwisko.Text = temp2;
+                comboBox_Pracownicy.Text = temp3;
+            }
+        }
     }
-    }
+
+}
     
 
