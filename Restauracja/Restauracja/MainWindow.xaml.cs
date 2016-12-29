@@ -27,8 +27,9 @@ namespace Restauracja
         public MainWindow()
         {
             InitializeComponent();
+            wypelnijStanowiska();
         }
-        private String serwer = "E540";
+        private String serwer = "LAPTOP-PMVJTLEG\\SQLSTANDARD";
         private void Zaloguj_Sie_Click(object sender, RoutedEventArgs e)
         {
              logowanie = new dane();
@@ -425,8 +426,7 @@ namespace Restauracja
                     sqlCmd.CommandText = alter;
                     int liczba_wierszy = (int)sqlCmd.ExecuteScalar();
                     if (liczba_wierszy == 0)
-                    {
-                        
+                    { 
 
                             string temp = "update Stolik set Numer_stolika = "+ Tekst_Stoliki_Numer.Text+" where Numer_stolika= " + row[0].ToString();
                             sqlCmd.CommandText = temp;
@@ -439,10 +439,6 @@ namespace Restauracja
                         MessageBox.Show("Istenie już stolik o podanym numerze", "Błąd");
 
                     }
-
-
-
-
 
 
                 }
@@ -470,8 +466,101 @@ namespace Restauracja
             {
                 wyswietlStolik();
             }
+            if (item.Name == "Pracownicy")
+            {
+                
+                wyswietlPracownicy();
+            }
 
 
+        }
+
+        public void wypelnijStanowiska()
+        {
+            comboBox_Pracownicy.Items.Add("Kelner");
+            comboBox_Pracownicy.Items.Add("Menager");
+            comboBox_Pracownicy.Items.Add("Pomoc kuchenna");
+            comboBox_Pracownicy.Items.Add("Kucharz");
+            comboBox_Pracownicy.Items.Add("Barman");
+        }
+
+        public void wyswietlPracownicy()
+        {
+            SqlConnection sqlConn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+
+            sqlConn.Open();
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.Connection = sqlConn;
+            SqlDataReader dataReader = null;
+
+            //Tekst_Pracownicy_Imie.Text = "";
+            //Tekst_Pracownicy_Nazwisko.Text = "";
+            sqlCmd.CommandText = "select Imie, Nazwisko, Stanowisko from Wyswietl_Pracownik";
+
+            dataReader = sqlCmd.ExecuteReader();
+
+            if (dataReader != null)
+            {
+                DataTable dt = new DataTable();
+                dt.Load(dataReader);
+                Dane_Pracownicy.ItemsSource = dt.DefaultView;
+
+                dataReader.Close();
+            }
+
+            sqlConn.Close();
+        }
+
+        private void Przycisk_Pracownicy_Dodaj_Click(object sender, RoutedEventArgs e)
+        {
+            if (Tekst_Pracownicy_Imie.Text == "" )
+            {
+                MessageBox.Show("Nie podano imienia.", "Błąd");
+            }
+            else if (Tekst_Pracownicy_Nazwisko.Text == "")
+            {
+                MessageBox.Show("Nie podano nazwiska", "Błąd");
+            }
+            else if (Tekst_Pracownicy_Haslo.Text == "")
+            {
+                MessageBox.Show("Nie podano hasla", "Błąd");
+            }
+            else if(comboBox_Pracownicy.Text == "")
+            {
+                MessageBox.Show("Nie wybrano stanowiska", "Błąd");
+            }
+            else
+            {
+                SqlConnection sqlConn = new SqlConnection("Server= " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+
+                sqlConn.Open();
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.Connection = sqlConn;
+
+                
+                string alter =" select count(*) from master.dbo.syslogins where name = '" + Tekst_Pracownicy_Login.Text + "'";
+                sqlCmd.CommandText = alter;
+                int liczba_wierszu = (int)sqlCmd.ExecuteScalar();
+                if (liczba_wierszu == 0)
+                {
+                    sqlCmd.CommandText = "insert into Pracownik (Imie, Nazwisko, Stanowisko) Values(" +"'"+ Tekst_Pracownicy_Imie.Text+"'" + "," + "'"+Tekst_Pracownicy_Nazwisko.Text +"'"+ "," + "'"+comboBox_Pracownicy.Text.ToString() +"'"+ ");" +
+                         "CREATE LOGIN " + Tekst_Pracownicy_Login.Text + " WITH PASSWORD ='" + Tekst_Pracownicy_Haslo.Text + "'; " + "CREATE USER " + Tekst_Pracownicy_Login.Text + "User" + " FOR LOGIN " + Tekst_Pracownicy_Login.Text+";";
+                    sqlCmd.ExecuteReader();
+                    Tekst_Pracownicy_Imie.Text = "";
+                    Tekst_Pracownicy_Nazwisko.Text = "";
+                    Tekst_Pracownicy_Login.Text = "";
+                    Tekst_Pracownicy_Haslo.Text = "";
+
+                }
+                if (liczba_wierszu >= 1)
+                {
+                    MessageBox.Show("Pracownik o takim loginie juz występuje.", "Błąd");
+
+                }
+                wyswietlPracownicy();
+                sqlConn.Close();
+
+            }
         }
     }
     }
