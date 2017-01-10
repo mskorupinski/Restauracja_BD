@@ -42,25 +42,20 @@
                         </StackPanel>
                     </TabItem.Header>
                     <Grid Background="#FFE5E5E5" Margin="0,-2,0,1.4">
-                        <Label x:Name="Etykieta_Rezerwacja_Imie" Content="Imię" HorizontalAlignment="Left" Margin="289,10,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="Tekst_Rezerwacja_Imie" HorizontalAlignment="Left" Height="23" Margin="289,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        <Label x:Name="Etykieta_Rezerwacja_Nazwisko" Content="Nazwisko" HorizontalAlignment="Left" Margin="289,69,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="Tekst_Rezerwacja_Nazwisko" HorizontalAlignment="Left" Height="23" Margin="289,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        <TextBox x:Name="Tekst_Rezerwacja_Numer" HorizontalAlignment="Left" Height="23" Margin="289,159,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.552,5.626"/>
-                        <Label x:Name="Etykieta_Rezerwacja_Numer" Content="Telefon" HorizontalAlignment="Left" Margin="289,128,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="Etykieta_Rezerwacja_Adres" Content="Adres email" HorizontalAlignment="Left" Margin="289,189,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="Tekst_Rezerwacja_Adres" HorizontalAlignment="Left" Height="23" Margin="289,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.552,5.626"/>
-                        <DataGrid x:Name="Dane_Rezerwacja" HorizontalAlignment="Left" Margin="23,25,0,0" VerticalAlignment="Top" Width="247" Height="257"/>
-                        <Label x:Name="Etykieta_Rezerwacja_Data" Content="Data rezerwacji" HorizontalAlignment="Left" Margin="430,7,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="Tekst_Rezerwacja_Data" HorizontalAlignment="Left" Height="23" Margin="430,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        <TextBox x:Name="Tekst_Rezerwacja_Czas" HorizontalAlignment="Left" Height="23" Margin="430,100,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        <TextBox x:Name="Tekst_Rezerwacja_Okres" HorizontalAlignment="Left" Height="23" Margin="432,159,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        <TextBox x:Name="Tekst_Rezerwacja_Stolik" HorizontalAlignment="Left" Height="23" Margin="430,220,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
-                        <Label x:Name="Etykieta_Rezerwacja_Czas" Content="Czas rezerwacji" HorizontalAlignment="Left" Margin="426,69,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="Etykieta_Rezerwacja_Data_Copy1" Content="Okres rezerwacji" HorizontalAlignment="Left" Margin="432,128,0,0" VerticalAlignment="Top"/>
-                        <Label x:Name="Etykieta_Rezerwacja_Stolik" Content="Numer stolika" HorizontalAlignment="Left" Margin="432,189,0,0" VerticalAlignment="Top"/>
-                        <Button x:Name="Przycisk_Rezerwacja_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="289,263,0,0" VerticalAlignment="Top" Width="120" Height="19"/>
+                        <Label x:Name="Etykieta_Rezerwacja_Imie" Content="Imię" HorizontalAlignment="Left" Margin="439,43,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="Tekst_Rezerwacja_Imie" HorizontalAlignment="Left" Height="23" Margin="439,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <Label x:Name="Etykieta_Rezerwacja_Nazwisko" Content="Nazwisko" HorizontalAlignment="Left" Margin="439,97,0,0" VerticalAlignment="Top"/>
+                        <TextBox x:Name="Tekst_Rezerwacja_Nazwisko" HorizontalAlignment="Left" Height="23" Margin="439,131,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+                        <TextBox x:Name="Tekst_Rezerwacja_Numer" HorizontalAlignment="Left" Height="23" Margin="439,195,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.552,5.626"/>
+                        <Label x:Name="Etykieta_Rezerwacja_Numer" Content="Telefon" HorizontalAlignment="Left" Margin="439,164,0,0" VerticalAlignment="Top"/>
+                        <DataGrid x:Name="Dane_Rezerwacja" HorizontalAlignment="Left" Margin="23,25,0,0" VerticalAlignment="Top" Width="247" Height="257" Initialized="Dane_Rezerwacja_Initialized" IsReadOnly="True"/>
+                        <Label x:Name="Etykieta_Rezerwacja_Stolik" Content="Numer stolika" HorizontalAlignment="Left" Margin="289,128,0,0" VerticalAlignment="Top"/>
+                        <Button x:Name="Przycisk_Rezerwacja_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="289,263,0,0" VerticalAlignment="Top" Width="120" Height="19" Click="Przycisk_Rezerwacja_Dodaj_Click"/>
                         <Button x:Name="Przycisk_Rezerwacja_Usun" Content="Usuń" HorizontalAlignment="Left" Margin="430,263,0,0" VerticalAlignment="Top" Width="120" Height="19"/>
+                        <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="289,167,0,0" VerticalAlignment="Top" Width="56" DropDownOpened="comboBox1_DropDownOpened"/>
+                        <DatePicker x:Name="dzien" HorizontalAlignment="Left" Margin="289,26,0,0" VerticalAlignment="Top"/>
+                        <ComboBox x:Name="comboBox2" HorizontalAlignment="Left" Margin="289,81,0,0" VerticalAlignment="Top" Width="56" Initialized="comboBox2_Initialized" SelectionChanged="comboBox2_SelectionChanged"/>
+                        <ComboBox x:Name="comboBox3" HorizontalAlignment="Left" Margin="350,81,0,0" VerticalAlignment="Top" Width="51" Initialized="comboBox3_Initialized" SelectionChanged="comboBox3_SelectionChanged"/>
 
                     </Grid>
 

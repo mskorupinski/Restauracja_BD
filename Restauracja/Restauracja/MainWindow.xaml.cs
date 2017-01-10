@@ -32,7 +32,7 @@ namespace Restauracja
             wyswietlPracownicy();
 
         }
-        private String serwer = "LAPTOP-PMVJTLEG\\SQLSTANDARD";
+        private String serwer = "E540";
         private void Zaloguj_Sie_Click(object sender, RoutedEventArgs e)
         {
              logowanie = new dane();
@@ -252,7 +252,7 @@ namespace Restauracja
             
             Tekst_Stoliki_Numer.Text = "";
             Tekst_Stoliki_Miejsca.Text = "";
-            sqlCmd.CommandText = "select Numer, Miejsca from Wyswietl_Stolik where not Numer=0";
+            sqlCmd.CommandText = "select Numer, Miejsca from Wyswietl_Stolik  ";
 
             dataReader = sqlCmd.ExecuteReader();
 
@@ -532,8 +532,8 @@ namespace Restauracja
                 int liczba_wierszu = (int)sqlCmd.ExecuteScalar();
                 if (liczba_wierszu == 0)
                 {
-                    sqlCmd.CommandText = "insert into Pracownik (Imie, Nazwisko, Stanowisko) Values(" +"'"+ Tekst_Pracownicy_Imie.Text+"'" + "," + "'"+Tekst_Pracownicy_Nazwisko.Text +"'"+ "," + "'"+comboBox_Pracownicy.Text.ToString() +"'"+ ");" +
-                         "CREATE LOGIN " + Tekst_Pracownicy_Login.Text + " WITH PASSWORD ='" + Tekst_Pracownicy_Haslo.Text + "'; " + "CREATE USER " + Tekst_Pracownicy_Login.Text + "User" + " FOR LOGIN " + Tekst_Pracownicy_Login.Text+";";
+                    sqlCmd.CommandText = "insert into Pracownik (Imie, Nazwisko, Stanowisko,Login_pracownik) Values(" + "'" + Tekst_Pracownicy_Imie.Text + "'" + "," + "'" + Tekst_Pracownicy_Nazwisko.Text + "'" + "," + "'" + comboBox_Pracownicy.Text.ToString() + "'" + ",'" + Tekst_Pracownicy_Login.Text + "'" + ");" +
+                           "CREATE LOGIN " + Tekst_Pracownicy_Login.Text + " WITH PASSWORD ='" + Tekst_Pracownicy_Haslo.Text + "'; " + "CREATE USER " + Tekst_Pracownicy_Login.Text + "User" + " FOR LOGIN " + Tekst_Pracownicy_Login.Text + ";";
                     sqlCmd.ExecuteReader();
                     Tekst_Pracownicy_Imie.Text = "";
                     Tekst_Pracownicy_Nazwisko.Text = "";
@@ -627,6 +627,169 @@ namespace Restauracja
                 comboBox_Pracownicy.Text = temp3;
             }
         }
+
+        private void comboBox2_Initialized(object sender, EventArgs e)
+        {
+            comboBox2.Items.Add("hh");
+            comboBox2.SelectedItem="hh";
+            comboBox2.Items.Add("10");
+            comboBox2.Items.Add("11");
+            comboBox2.Items.Add("12");
+            comboBox2.Items.Add("13");
+            comboBox2.Items.Add("14");
+            comboBox2.Items.Add("15");
+            comboBox2.Items.Add("16");
+            comboBox2.Items.Add("17");
+            comboBox2.Items.Add("18");
+            comboBox2.Items.Add("19");
+            comboBox2.Items.Add("20");
+            comboBox2.Items.Add("21");
+            comboBox2.Items.Add("22");
+
+
+
+        }
+
+        private void comboBox3_Initialized(object sender, EventArgs e)
+        {
+            comboBox3.Items.Add("mm");
+            comboBox3.SelectedItem = "mm";
+            comboBox3.Items.Add("00");
+            comboBox3.Items.Add("15");
+            comboBox3.Items.Add("30");
+            comboBox3.Items.Add("45");
+            
+
+        }
+
+        private void comboBox3_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void comboBox2_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void WyswietlRezerwacje()
+        {
+
+            SqlConnection sqlConn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+
+            sqlConn.Open();
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.Connection = sqlConn;
+            SqlDataReader dataReader = null;
+
+
+            sqlCmd.CommandText = "select Imie, Nazwisko, Data, Godzina, Stolik from Wyswietl_Rezerwacja";
+
+            dataReader = sqlCmd.ExecuteReader();
+
+            if (dataReader != null)
+            {
+
+                DataTable dt = new DataTable();
+                dt.Load(dataReader);
+                Dane_Rezerwacja.ItemsSource = dt.DefaultView;
+
+                dataReader.Close();
+            }
+
+            sqlConn.Close();
+        }
+
+        private void Dane_Rezerwacja_Initialized(object sender, EventArgs e)
+        {
+            WyswietlRezerwacje();
+        }
+
+        private void comboBox1_DropDownOpened(object sender, EventArgs e)
+        {
+            if (comboBox1.Items.Count > 0) comboBox1.Items.Clear();
+
+            string Sql = "select Numer, Miejsca from Wyswietl_Stolik where not Numer=0";
+            SqlConnection conn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(Sql, conn);
+            SqlDataReader DR = cmd.ExecuteReader();
+
+            while (DR.Read())
+            {
+                comboBox1.Items.Add(DR[0].ToString());
+
+            }
+
+            conn.Close();
+        }
+
+        private void Przycisk_Rezerwacja_Dodaj_Click(object sender, RoutedEventArgs e)
+        {
+
+
+            if (dzien.SelectedDate.ToString()== "")
+            {
+                MessageBox.Show("Nie podano daty", "Błąd");
+            }
+            else if (comboBox2.SelectedItem.ToString() == "hh"||comboBox3.SelectedItem.ToString()=="mm")
+            {
+                MessageBox.Show("Nie podano godziny", "Błąd");
+            }
+            else if (comboBox1.SelectedItem.ToString() == "")
+            {
+                MessageBox.Show("Nie wybrano stolika", "Błąd");
+            }
+            else if (Tekst_Rezerwacja_Imie.Text == "")
+            {
+                MessageBox.Show("Nie podano imienia", "Błąd");
+            }
+            else if (Tekst_Rezerwacja_Nazwisko.Text == "")
+            {
+                MessageBox.Show("Nie podano nazwiska", "Błąd");
+            }
+            else if (Tekst_Rezerwacja_Numer.Text == "")
+            {
+                MessageBox.Show("Nie podano numeru telefonu", "Błąd");
+            }
+            else
+            {
+                SqlConnection sqlConn = new SqlConnection("Server= " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+
+                sqlConn.Open();
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.Connection = sqlConn;
+
+                /*
+                string alter = " select count(*) from master.dbo.syslogins where name = '" + Tekst_Pracownicy_Login.Text + "'";
+                sqlCmd.CommandText = alter;
+                int liczba_wierszu = (int)sqlCmd.ExecuteScalar();
+                */
+                if (0== 0)
+                {
+                    sqlCmd.CommandText = "insert into Klient (Imie,Nazwisko,Telefon) values ('" + Tekst_Rezerwacja_Imie.Text + "','" + Tekst_Rezerwacja_Nazwisko.Text + "','" + Tekst_Rezerwacja_Numer.Text + "');" +
+                        "insert into Rezerwacja (Data_rezerwacji, Czas_rezerwacji, Numer_stolika) values ('" + dzien.SelectedDate.ToString().Replace("/", "-") + "','" + comboBox2.SelectedItem.ToString() + ":" + comboBox3.SelectedItem.ToString() + ":00'," + "(select Id_stolika from Stolik where Numer_stolika=" + comboBox1.SelectedItem.ToString()+")"+ ");"; 
+
+                    Tekst_Rezerwacja_Imie.Text = "";
+                    Tekst_Rezerwacja_Nazwisko.Text = "";
+                    Tekst_Rezerwacja_Numer.Text = "";
+                    comboBox2.SelectedItem = "hh";
+                    comboBox3.SelectedItem = "mm";
+                    comboBox1.Text = "";
+
+                }
+                if (2 >= 1)
+                {
+                    MessageBox.Show("Pracownik o takim loginie juz występuje.", "Błąd");
+
+                }
+                WyswietlRezerwacje();
+                sqlConn.Close();
+            }
+
+            }
+
+
     }
 
 }
