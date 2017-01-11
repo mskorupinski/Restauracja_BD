@@ -33,7 +33,7 @@ namespace Restauracja
             wyswietlPracownicy();
 
         }
-        private String serwer = "DESKTOP-BU2VMS6\\SQLEXPRESS";
+        private String serwer = "E540";
         private void Zaloguj_Sie_Click(object sender, RoutedEventArgs e)
         {
              logowanie = new dane();
@@ -793,11 +793,11 @@ namespace Restauracja
         {
 
 
-            if (dzien.SelectedDate.ToString()== "")
+            if (dzien.SelectedDate.ToString() == "")
             {
                 MessageBox.Show("Nie podano daty", "Błąd");
             }
-            else if (comboBox2.SelectedItem.ToString() == "hh"||comboBox3.SelectedItem.ToString()=="mm")
+            else if (comboBox2.SelectedItem.ToString() == "hh" || comboBox3.SelectedItem.ToString() == "mm")
             {
                 MessageBox.Show("Nie podano godziny", "Błąd");
             }
@@ -824,44 +824,55 @@ namespace Restauracja
                 sqlConn.Open();
                 SqlCommand sqlCmd = new SqlCommand();
                 sqlCmd.Connection = sqlConn;
-
-
-                string alter = "select count(*) from Klient where Imie = '" + Tekst_Rezerwacja_Imie.Text + "'and Nazwisko='" + Tekst_Rezerwacja_Nazwisko.Text + "'and Telefon='" + Tekst_Rezerwacja_Numer.Text+  "';";
+                string zapytanie = "select Id_stolika from Stolik where Numer_stolika=" + comboBox1.SelectedItem.ToString();
+                sqlCmd.CommandText = zapytanie;
+                int numer = Convert.ToInt32(sqlCmd.ExecuteScalar().ToString());
+                string alter = "select count(*) from Wyswietl_Rezerwacja where Data='" + dzien.SelectedDate.Value.Year + " / " + dzien.SelectedDate.Value.Month + " / " + dzien.SelectedDate.Value.Day + "' and Godzina='" + comboBox2.SelectedItem.ToString() + ":" + comboBox3.SelectedItem.ToString() + ":00' and Stolik=" + numer;
                 sqlCmd.CommandText = alter;
-                int liczba = Convert.ToInt32(sqlCmd.ExecuteScalar().ToString());
-                if (liczba == 0)
+                int czy_zarezerwowane = Convert.ToInt32(sqlCmd.ExecuteScalar().ToString());
+                if (czy_zarezerwowane == 0)
                 {
-                    sqlCmd.CommandText = "insert into Klient (Imie,Nazwisko,Telefon) values ('" + Tekst_Rezerwacja_Imie.Text + "','" + Tekst_Rezerwacja_Nazwisko.Text + "','" + Tekst_Rezerwacja_Numer.Text + "');"+ "select Id_klienta from Klient ORDER BY Id_klienta DESC;";
-                    int id_dodanego_klienta= (int)sqlCmd.ExecuteScalar();
-                   string zapytanie = "select Id_stolika from Stolik where Numer_stolika=" + comboBox1.SelectedItem.ToString();
-                    sqlCmd.CommandText = zapytanie;
-                    int numer = Convert.ToInt32(sqlCmd.ExecuteScalar().ToString());
-                    sqlCmd.CommandText="insert into Rezerwacja (Id_klienta, Data_rezerwacji, Czas_rezerwacji, Numer_stolika) values ("+id_dodanego_klienta+",'" + dzien.SelectedDate.Value.Year+"/"+ dzien.SelectedDate.Value.Month + "/"+ dzien.SelectedDate.Value.Day+ "','" + comboBox2.SelectedItem.ToString() + ":" + comboBox3.SelectedItem.ToString() + ":00'," + numer+ ");";
-                    sqlCmd.ExecuteNonQuery();
-                    Tekst_Rezerwacja_Imie.Text = "";
-                    Tekst_Rezerwacja_Nazwisko.Text = "";
-                    Tekst_Rezerwacja_Numer.Text = "";
-                    comboBox2.SelectedItem = "hh";
-                    comboBox3.SelectedItem = "mm";
-                    comboBox1.Text = "";
+                    alter = "select count(*) from Klient where Imie = '" + Tekst_Rezerwacja_Imie.Text + "'and Nazwisko='" + Tekst_Rezerwacja_Nazwisko.Text + "'and Telefon='" + Tekst_Rezerwacja_Numer.Text + "';";
+                    sqlCmd.CommandText = alter;
+                    int liczba = Convert.ToInt32(sqlCmd.ExecuteScalar().ToString());
+                    if (liczba == 0)
+                    {
+                        sqlCmd.CommandText = "insert into Klient (Imie,Nazwisko,Telefon) values ('" + Tekst_Rezerwacja_Imie.Text + "','" + Tekst_Rezerwacja_Nazwisko.Text + "','" + Tekst_Rezerwacja_Numer.Text + "');" + "select Id_klienta from Klient ORDER BY Id_klienta DESC;";
+                        int id_dodanego_klienta = (int)sqlCmd.ExecuteScalar();
+
+                        sqlCmd.CommandText = "insert into Rezerwacja (Id_klienta, Data_rezerwacji, Czas_rezerwacji, Numer_stolika) values (" + id_dodanego_klienta + ",'" + dzien.SelectedDate.Value.Year + "/" + dzien.SelectedDate.Value.Month + "/" + dzien.SelectedDate.Value.Day + "','" + comboBox2.SelectedItem.ToString() + ":" + comboBox3.SelectedItem.ToString() + ":00'," + numer + ");";
+                        sqlCmd.ExecuteNonQuery();
+                        Tekst_Rezerwacja_Imie.Text = "";
+                        Tekst_Rezerwacja_Nazwisko.Text = "";
+                        Tekst_Rezerwacja_Numer.Text = "";
+                        comboBox2.SelectedItem = "hh";
+                        comboBox3.SelectedItem = "mm";
+                        comboBox1.Text = "";
+                    }
+                    if (liczba >= 1)
+                    {
+                         zapytanie = "select Id_klienta from Klient where Imie = '" + Tekst_Rezerwacja_Imie.Text + "'and Nazwisko='" + Tekst_Rezerwacja_Nazwisko.Text + "'and Telefon='" + Tekst_Rezerwacja_Numer.Text + "';";
+                        sqlCmd.CommandText = zapytanie;
+                        int id_klienta = (int)sqlCmd.ExecuteScalar();
+                        zapytanie = "select Id_stolika from Stolik where Numer_stolika=" + comboBox1.SelectedItem.ToString();
+                        sqlCmd.CommandText = zapytanie;
+                         numer = (int)sqlCmd.ExecuteScalar();
+
+                        sqlCmd.CommandText = "insert into Rezerwacja (Id_klienta, Data_rezerwacji, Czas_rezerwacji, Numer_stolika) values (" + id_klienta + ",'" + dzien.SelectedDate.Value.Year + "/" + dzien.SelectedDate.Value.Month + "/" + dzien.SelectedDate.Value.Day + "','" + comboBox2.SelectedItem.ToString() + ":" + comboBox3.SelectedItem.ToString() + ":00'," + numer + ");";
+                        sqlCmd.ExecuteNonQuery();
+
+                    }
+                    WyswietlRezerwacje(1);
+                    sqlConn.Close();
                 }
-                if (liczba >= 1)
+
+                else
                 {
-                    string zapytanie = "select Id_klienta from Klient where Imie = '" + Tekst_Rezerwacja_Imie.Text + "'and Nazwisko='" + Tekst_Rezerwacja_Nazwisko.Text + "'and Telefon='" + Tekst_Rezerwacja_Numer.Text + "';";
-                    sqlCmd.CommandText = zapytanie;
-                    int id_klienta = (int)sqlCmd.ExecuteScalar();
-                    zapytanie = "select Id_stolika from Stolik where Numer_stolika=" + comboBox1.SelectedItem.ToString();
-                    sqlCmd.CommandText = zapytanie;
-                    int numer = (int)sqlCmd.ExecuteScalar();
-                    
-                    sqlCmd.CommandText = "insert into Rezerwacja (Id_klienta, Data_rezerwacji, Czas_rezerwacji, Numer_stolika) values (" + id_klienta + ",'" + dzien.SelectedDate.Value.Year + "/" + dzien.SelectedDate.Value.Month + "/" + dzien.SelectedDate.Value.Day + "','" + comboBox2.SelectedItem.ToString() + ":" + comboBox3.SelectedItem.ToString() + ":00'," + numer + ");";
-                    sqlCmd.ExecuteNonQuery();
+                    MessageBox.Show("Nie można dokonać rezerwacji", "Błąd");
+                    sqlConn.Close();
 
                 }
-                WyswietlRezerwacje(0);
-                sqlConn.Close();
             }
-
             }
 
         private void Przycisk_Rezerwacja_Usun_Click(object sender, RoutedEventArgs e)
@@ -875,7 +886,7 @@ namespace Restauracja
             DateTime date = Convert.ToDateTime(row[2].ToString());
             sqlCmd.CommandText = "delete from Rezerwacja where  Data_rezerwacji='"+ date.Year+"-"+date.Month+"-"+date.Day + "'and Czas_rezerwacji='"+ row[3].ToString() + "'and Numer_stolika=" +row[4].ToString()+";" ;
             sqlCmd.ExecuteNonQuery();
-            WyswietlRezerwacje(0);
+            WyswietlRezerwacje(1);
 
             sqlConn.Close();
         }
@@ -883,6 +894,11 @@ namespace Restauracja
         private void dzien_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
         {
             WyswietlRezerwacje(1);
+
+        }
+
+        private void Dane_Rezerwacja_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
 
         }
     }
