@@ -33,7 +33,7 @@ namespace Restauracja
             wyswietlPracownicy();
 
         }
-        private String serwer = "E540";
+        private String serwer = "DESKTOP-BU2VMS6\\SQLEXPRESS";
         private void Zaloguj_Sie_Click(object sender, RoutedEventArgs e)
         {
              logowanie = new dane();
@@ -756,7 +756,7 @@ namespace Restauracja
                     DataTable dt = new DataTable();
                     dt.Load(dataReader);
                     Dane_Rezerwacja.ItemsSource = dt.DefaultView;
-
+                
                     dataReader.Close();
                 }
 
@@ -827,7 +827,8 @@ namespace Restauracja
                 string zapytanie = "select Id_stolika from Stolik where Numer_stolika=" + comboBox1.SelectedItem.ToString();
                 sqlCmd.CommandText = zapytanie;
                 int numer = Convert.ToInt32(sqlCmd.ExecuteScalar().ToString());
-                string alter = "select count(*) from Wyswietl_Rezerwacja where Data='" + dzien.SelectedDate.Value.Year + " / " + dzien.SelectedDate.Value.Month + " / " + dzien.SelectedDate.Value.Day + "' and Godzina='" + comboBox2.SelectedItem.ToString() + ":" + comboBox3.SelectedItem.ToString() + ":00' and Stolik=" + numer;
+                   
+                string alter = "select count(*) from Wyswietl_Rezerwacja where Data='" + dzien.SelectedDate.Value.Year + " / " + dzien.SelectedDate.Value.Month + " / " + dzien.SelectedDate.Value.Day + "' and Godzina='" + comboBox2.SelectedItem.ToString() + ":" + comboBox3.SelectedItem.ToString() + ":00' and Stolik ='" + comboBox1.SelectedItem.ToString() +"'";
                 sqlCmd.CommandText = alter;
                 int czy_zarezerwowane = Convert.ToInt32(sqlCmd.ExecuteScalar().ToString());
                 if (czy_zarezerwowane == 0)
@@ -884,7 +885,9 @@ namespace Restauracja
             sqlCmd.Connection = sqlConn;
             DataRowView row = (DataRowView)Dane_Rezerwacja.SelectedItem;
             DateTime date = Convert.ToDateTime(row[2].ToString());
-            sqlCmd.CommandText = "delete from Rezerwacja where  Data_rezerwacji='"+ date.Year+"-"+date.Month+"-"+date.Day + "'and Czas_rezerwacji='"+ row[3].ToString() + "'and Numer_stolika=" +row[4].ToString()+";" ;
+            sqlCmd.CommandText = "select Id from Wyswietl_Rezerwacja where Stolik = " + row[4].ToString() + ";";
+            int numer = (int)sqlCmd.ExecuteScalar();
+            sqlCmd.CommandText = "delete from Rezerwacja where  Data_rezerwacji='"+ date.Year+"-"+date.Month+"-"+date.Day + "'and Czas_rezerwacji='"+ row[3].ToString() + "'and Numer_stolika=" +numer+";" ;
             sqlCmd.ExecuteNonQuery();
             WyswietlRezerwacje(1);
 
