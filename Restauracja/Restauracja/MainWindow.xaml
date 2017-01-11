@@ -51,9 +51,9 @@
                         <DataGrid x:Name="Dane_Rezerwacja" HorizontalAlignment="Left" Margin="23,25,0,0" VerticalAlignment="Top" Width="247" Height="257" Initialized="Dane_Rezerwacja_Initialized" IsReadOnly="True"/>
                         <Label x:Name="Etykieta_Rezerwacja_Stolik" Content="Numer stolika" HorizontalAlignment="Left" Margin="289,128,0,0" VerticalAlignment="Top"/>
                         <Button x:Name="Przycisk_Rezerwacja_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="289,263,0,0" VerticalAlignment="Top" Width="120" Height="19" Click="Przycisk_Rezerwacja_Dodaj_Click"/>
-                        <Button x:Name="Przycisk_Rezerwacja_Usun" Content="Usuń" HorizontalAlignment="Left" Margin="430,263,0,0" VerticalAlignment="Top" Width="120" Height="19"/>
+                        <Button x:Name="Przycisk_Rezerwacja_Usun" Content="Usuń" HorizontalAlignment="Left" Margin="430,263,0,0" VerticalAlignment="Top" Width="120" Height="19" Click="Przycisk_Rezerwacja_Usun_Click"/>
                         <ComboBox x:Name="comboBox1" HorizontalAlignment="Left" Margin="289,167,0,0" VerticalAlignment="Top" Width="56" DropDownOpened="comboBox1_DropDownOpened"/>
-                        <DatePicker x:Name="dzien" HorizontalAlignment="Left" Margin="289,26,0,0" VerticalAlignment="Top"/>
+                        <DatePicker x:Name="dzien" HorizontalAlignment="Left" Margin="289,26,0,0" VerticalAlignment="Top" SelectedDateChanged="dzien_SelectedDateChanged"/>
                         <ComboBox x:Name="comboBox2" HorizontalAlignment="Left" Margin="289,81,0,0" VerticalAlignment="Top" Width="56" Initialized="comboBox2_Initialized" SelectionChanged="comboBox2_SelectionChanged"/>
                         <ComboBox x:Name="comboBox3" HorizontalAlignment="Left" Margin="350,81,0,0" VerticalAlignment="Top" Width="51" Initialized="comboBox3_Initialized" SelectionChanged="comboBox3_SelectionChanged"/>
 

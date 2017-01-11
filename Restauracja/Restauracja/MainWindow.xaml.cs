@@ -673,37 +673,50 @@ namespace Restauracja
 
         }
 
-        private void WyswietlRezerwacje()
+        private void WyswietlRezerwacje(int a)
         {
+           
+                SqlConnection sqlConn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
 
-            SqlConnection sqlConn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
-
-            sqlConn.Open();
-            SqlCommand sqlCmd = new SqlCommand();
-            sqlCmd.Connection = sqlConn;
-            SqlDataReader dataReader = null;
+                sqlConn.Open();
+                SqlCommand sqlCmd = new SqlCommand();
+                sqlCmd.Connection = sqlConn;
+                SqlDataReader dataReader = null;
 
 
-            sqlCmd.CommandText = "select Imie, Nazwisko, Data, Godzina, Stolik from Wyswietl_Rezerwacja";
+            if (a == 0)
+            {
+                DateTime thisDay = DateTime.Today;
 
+                sqlCmd.CommandText = "select Imie, Nazwisko, Data, Godzina, Stolik from Wyswietl_Rezerwacja where Data='" + thisDay.Year + "/" + thisDay.Month + "/" + thisDay.Day+"'";
+
+            }
+            if (a == 1)
+            {
+                sqlCmd.CommandText = "select Imie, Nazwisko, Data, Godzina, Stolik from Wyswietl_Rezerwacja where Data='" + dzien.SelectedDate.Value.Year + "/" + dzien.SelectedDate.Value.Month + "/" + dzien.SelectedDate.Value.Day+"'";
+
+
+            }
             dataReader = sqlCmd.ExecuteReader();
 
-            if (dataReader != null)
-            {
+                if (dataReader != null)
+                {
 
-                DataTable dt = new DataTable();
-                dt.Load(dataReader);
-                Dane_Rezerwacja.ItemsSource = dt.DefaultView;
+                    DataTable dt = new DataTable();
+                    dt.Load(dataReader);
+                    Dane_Rezerwacja.ItemsSource = dt.DefaultView;
 
-                dataReader.Close();
-            }
+                    dataReader.Close();
+                }
 
-            sqlConn.Close();
+                sqlConn.Close();
+            
+         
         }
 
         private void Dane_Rezerwacja_Initialized(object sender, EventArgs e)
         {
-            WyswietlRezerwacje();
+            WyswietlRezerwacje(0);
         }
 
         private void comboBox1_DropDownOpened(object sender, EventArgs e)
@@ -794,13 +807,33 @@ namespace Restauracja
                     sqlCmd.ExecuteNonQuery();
 
                 }
-                WyswietlRezerwacje();
+                WyswietlRezerwacje(0);
                 sqlConn.Close();
             }
 
             }
 
+        private void Przycisk_Rezerwacja_Usun_Click(object sender, RoutedEventArgs e)
+        {
+            SqlConnection sqlConn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
 
+            sqlConn.Open();
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.Connection = sqlConn;
+            DataRowView row = (DataRowView)Dane_Rezerwacja.SelectedItem;
+            DateTime date = Convert.ToDateTime(row[2].ToString());
+            sqlCmd.CommandText = "delete from Rezerwacja where  Data_rezerwacji='"+ date.Year+"-"+date.Month+"-"+date.Day + "'and Czas_rezerwacji='"+ row[3].ToString() + "'and Numer_stolika=" +row[4].ToString()+";" ;
+            sqlCmd.ExecuteNonQuery();
+            WyswietlRezerwacje(0);
+
+            sqlConn.Close();
+        }
+
+        private void dzien_SelectedDateChanged(object sender, SelectionChangedEventArgs e)
+        {
+            WyswietlRezerwacje(1);
+
+        }
     }
 
 }
