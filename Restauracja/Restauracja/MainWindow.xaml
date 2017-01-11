@@ -32,7 +32,21 @@
                             <TextBlock Text="Zamówienie" Margin="2,10,0,0" VerticalAlignment="Top" />
                         </StackPanel>
                     </TabItem.Header>
+                    <Grid Background="#FFE5E5E5" Margin="0,-2,0,1.4">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="52*"/>
+                            <ColumnDefinition Width="211*"/>
+                            <ColumnDefinition Width="325*"/>
+                        </Grid.ColumnDefinitions>
+                        <ComboBox x:Name="Zamowienie_Combo_Menu" HorizontalAlignment="Left" Margin="44,43,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="Zamowienie_Combo_Menu_DropDownOpened" Grid.ColumnSpan="2" SelectionChanged="Zamowienie_Combo_Menu_SelectionChanged"/>
+                        <ComboBox x:Name="Zamowienie_Combo_Danie" HorizontalAlignment="Left" Margin="44,108,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+                        <ComboBox x:Name="Zamowienie_Combo_Zupa" HorizontalAlignment="Left" Margin="44,150,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+                        <ComboBox x:Name="Zamowienie_Combo_Przystawka" HorizontalAlignment="Left" Margin="44,189,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+                        <ComboBox x:Name="Zamowienie_Combo_Deser" HorizontalAlignment="Left" Margin="44,234,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+                        <ComboBox x:Name="Zamowienie_Combo_Napoj" HorizontalAlignment="Left" Margin="44,280,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
+                        <Label x:Name="Zamowienie_Etykieta_Menu" Content="Menu" HorizontalAlignment="Left" Margin="30,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.5,-1.077" Grid.Column="1"/>
 
+                    </Grid>
                 </TabItem>
                 <TabItem >
                     <TabItem.Header>
@@ -73,15 +87,17 @@
                             <ColumnDefinition Width="47*"/>
                             <ColumnDefinition Width="65*"/>
                         </Grid.ColumnDefinitions>
-                        <TextBox x:Name="Tekst_Menu_Cena" HorizontalAlignment="Left" Height="23" Margin="5.2,104,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Tekst_Menu_Cena_PreviewTextInput" Grid.ColumnSpan="2" TextChanged="Tekst_Menu_Cena_TextChanged" Grid.Column="1"/>
-                        <TextBox x:Name="Tekst_Menu_Opis" HorizontalAlignment="Left" Height="23" Margin="5.2,153,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" Grid.Column="1"/>
-                        <Label x:Name="Etykieta_Menu_Nr" Content="Nr menu" HorizontalAlignment="Left" Margin="5.2,26,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-                        <Label x:Name="Etykieta_Menu_Cena" Content="Cena" HorizontalAlignment="Left" Margin="5.2,80,0,0" VerticalAlignment="Top" Grid.Column="1"/>
-                        <Label x:Name="Etykieta_Menu_Opis" Content="Opis" HorizontalAlignment="Left" Margin="5.2,127,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.339,0.406" Grid.Column="1"/>
+                        <TextBox x:Name="Tekst_Menu_Cena" HorizontalAlignment="Left" Height="23" Margin="74,103,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" PreviewTextInput="Tekst_Menu_Cena_PreviewTextInput" Grid.ColumnSpan="2" TextChanged="Tekst_Menu_Cena_TextChanged" Grid.Column="1"/>
+                        <TextBox x:Name="Tekst_Menu_Opis" HorizontalAlignment="Left" Height="23" Margin="74,143,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" Grid.Column="1"/>
+                        <Label x:Name="Etykieta_Menu_Nr" Content="Menu" HorizontalAlignment="Left" Margin="28,26,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                        <Label x:Name="Etykieta_Menu_Cena" Content="Cena" HorizontalAlignment="Left" Margin="32,103,0,0" VerticalAlignment="Top" Grid.Column="1"/>
+                        <Label x:Name="Etykieta_Menu_Opis" Content="Opis" Margin="35,140,25,0" VerticalAlignment="Top" RenderTransformOrigin="0.339,0.406" Grid.Column="1"/>
                         <Button x:Name="Przycisk_Menu_Usun" Content="Usuń" HorizontalAlignment="Left" Margin="8.2,214,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Menu_Usun_Click" Grid.Column="1"/>
                         <DataGrid x:Name="Dane_Menu" HorizontalAlignment="Left" Margin="29,21,0,0" VerticalAlignment="Top" Height="240" Width="311" IsReadOnly="True" ColumnWidth="*" FrozenColumnCount="1" CanUserDeleteRows="False"/>
                         <Button x:Name="Przycisk_Menu_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="18.4,214,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Menu_Dodaj_Click" Grid.Column="2"/>
-                        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="5.2,52,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="comboBox_DropDownOpened" DropDownClosed="comboBox_DropDownClosed" Grid.ColumnSpan="2" Grid.Column="1"/>
+                        <ComboBox x:Name="comboBox" HorizontalAlignment="Left" Margin="74,30,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="comboBox_DropDownOpened" DropDownClosed="comboBox_DropDownClosed" Grid.ColumnSpan="2" Grid.Column="1"/>
+                        <Label x:Name="Etykieta_Menu_Opis1" Content="Kategoria" Grid.Column="1" HorizontalAlignment="Left" Margin="10,62,0,0" VerticalAlignment="Top"/>
+                        <ComboBox x:Name="comboBox4" Grid.Column="1" HorizontalAlignment="Left" Margin="74,66,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2" Initialized="comboBox4_Initialized"/>
                     </Grid>
                 </TabItem>
                 <TabItem x:Name="Pracownicy">

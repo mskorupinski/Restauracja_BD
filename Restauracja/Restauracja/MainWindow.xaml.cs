@@ -127,7 +127,7 @@ namespace Restauracja
                     if (liczba_wierszu == 0)
                     {
 
-                        string temp = "insert into Produkt (Opis_produktu, Cena_produktu, Id_menu,Aktualnosc) Values('" + Tekst_Menu_Opis.Text + "','" + result + "'," + id_menu + ", 'aktualny');";
+                        string temp = "insert into Produkt (Opis_produktu, Cena_produktu, Id_menu,Aktualnosc, Kategoria) Values('" + Tekst_Menu_Opis.Text + "','" + result + "'," + id_menu + ", 'aktualny','" +comboBox4.Text +"');";
 
                         sqlCmd.CommandText = temp;
                         sqlCmd.ExecuteReader();
@@ -226,7 +226,7 @@ namespace Restauracja
 
             Tekst_Menu_Cena.Text = "";
             Tekst_Menu_Opis.Text = "";
-            sqlCmd.CommandText = "select Opis, Cena from Wyswietl_Menu where Rodzaj='" + comboBox.Text + "'";
+            sqlCmd.CommandText = "select Opis, Cena, Kategoria from Wyswietl_Menu where Rodzaj='" + comboBox.Text + "'";
 
             dataReader = sqlCmd.ExecuteReader();
 
@@ -903,6 +903,111 @@ namespace Restauracja
         private void Dane_Rezerwacja_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
 
+        }
+
+        private void comboBox4_Initialized(object sender, EventArgs e)
+        {
+            comboBox4.Items.Add("Napój");
+            comboBox4.Items.Add("Danie główne");
+            comboBox4.Items.Add("Deser");
+            comboBox4.Items.Add("Przystawka");
+            comboBox4.Items.Add("Zupa");
+        }
+
+        private void Zamowienie_Combo_Menu_DropDownOpened(object sender, EventArgs e)
+        {
+            Zamowienie_Etykieta_Menu.Visibility = Visibility.Hidden;
+            if (Zamowienie_Combo_Menu.Items.Count > 0) Zamowienie_Combo_Menu.Items.Clear();
+
+            string Sql = "select Opis from Menu";
+            SqlConnection conn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(Sql, conn);
+            SqlDataReader DR = cmd.ExecuteReader();
+
+            while (DR.Read())
+            {
+                Zamowienie_Combo_Menu.Items.Add(DR[0]);
+
+            }
+            /*
+           
+            */
+            conn.Close();
+        }
+
+        private void Zamowienie_Combo_Menu_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Zamowienie_Combo_Menu.SelectedItem != null)
+            {
+
+                if (Zamowienie_Combo_Danie.Items.Count > 0) Zamowienie_Combo_Danie.Items.Clear();
+                if (Zamowienie_Combo_Zupa.Items.Count > 0) Zamowienie_Combo_Zupa.Items.Clear();
+                if (Zamowienie_Combo_Przystawka.Items.Count > 0) Zamowienie_Combo_Przystawka.Items.Clear();
+                if (Zamowienie_Combo_Deser.Items.Count > 0) Zamowienie_Combo_Deser.Items.Clear();
+                if (Zamowienie_Combo_Napoj.Items.Count > 0) Zamowienie_Combo_Napoj.Items.Clear();
+
+                SqlConnection conn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+                conn.Open();
+                string Sql1 = "select Opis from Wyswietl_Menu where Rodzaj= '" + Zamowienie_Combo_Menu.SelectedItem.ToString() + "' and Kategoria='Danie główne'";
+                SqlCommand cmd = new SqlCommand(Sql1, conn);
+                SqlDataReader DR = cmd.ExecuteReader();
+
+                while (DR.Read())
+                {
+                    Zamowienie_Combo_Danie.Items.Add(DR[0]);
+
+                }
+                DR.Close();
+                string Sql2 = "select Opis from Wyswietl_Menu where Rodzaj= '" + Zamowienie_Combo_Menu.SelectedItem.ToString() + "' and Kategoria='Zupa'";
+                cmd = new SqlCommand(Sql2, conn);
+                DR = cmd.ExecuteReader();
+
+                while (DR.Read())
+                {
+                    Zamowienie_Combo_Zupa.Items.Add(DR[0]);
+
+                }
+                DR.Close();
+                string Sql3 = "select Opis from Wyswietl_Menu where Rodzaj= '" + Zamowienie_Combo_Menu.SelectedItem.ToString() + "' and Kategoria='Przystawka'";
+                cmd = new SqlCommand(Sql3, conn);
+                DR = cmd.ExecuteReader();
+
+                while (DR.Read())
+                {
+                    Zamowienie_Combo_Przystawka.Items.Add(DR[0]);
+
+                }
+                DR.Close();
+                string Sql4 = "select Opis from Wyswietl_Menu where Rodzaj= '" + Zamowienie_Combo_Menu.SelectedItem.ToString() + "' and Kategoria='Deser'";
+                cmd = new SqlCommand(Sql4, conn);
+                DR = cmd.ExecuteReader();
+
+                while (DR.Read())
+                {
+                    Zamowienie_Combo_Deser.Items.Add(DR[0]);
+
+                }
+                DR.Close();
+                string Sql5 = "select Opis from Wyswietl_Menu where Rodzaj= '" + Zamowienie_Combo_Menu.SelectedItem.ToString() + "' and Kategoria='Napój'";
+                cmd = new SqlCommand(Sql5, conn);
+                DR = cmd.ExecuteReader();
+
+                while (DR.Read())
+                {
+                    Zamowienie_Combo_Napoj.Items.Add(DR[0]);
+
+                }
+                conn.Close();
+            }
+            else
+            {
+                if (Zamowienie_Combo_Danie.Items.Count > 0) Zamowienie_Combo_Danie.Items.Clear();
+                if (Zamowienie_Combo_Zupa.Items.Count > 0) Zamowienie_Combo_Zupa.Items.Clear();
+                if (Zamowienie_Combo_Przystawka.Items.Count > 0) Zamowienie_Combo_Przystawka.Items.Clear();
+                if (Zamowienie_Combo_Deser.Items.Count > 0) Zamowienie_Combo_Deser.Items.Clear();
+                if (Zamowienie_Combo_Napoj.Items.Count > 0) Zamowienie_Combo_Napoj.Items.Clear();
+            }
         }
     }
 
