@@ -33,7 +33,7 @@ namespace Restauracja
             wyswietlPracownicy();
 
         }
-        private String serwer = "E540";
+        private String serwer = "DESKTOP-BU2VMS6\\SQLEXPRESS";
         private void Zaloguj_Sie_Click(object sender, RoutedEventArgs e)
         {
              logowanie = new dane();
@@ -555,7 +555,57 @@ namespace Restauracja
 
         private void Przycisk_Pracownicy_Usun_Click(object sender, RoutedEventArgs e)
         {
+            SqlConnection sqlConn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
 
+            sqlConn.Open();
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.Connection = sqlConn;
+
+            DataRowView row = (DataRowView)Dane_Pracownicy.SelectedItem;
+
+            if (row != null)
+            {
+
+
+                if (Tekst_Pracownicy_Imie.Text == "")
+                {
+                    MessageBox.Show("Nie podano imienia.", "Błąd");
+                }
+                else if (Tekst_Pracownicy_Nazwisko.Text == "")
+                {
+                    MessageBox.Show("Nie podano nazwiska", "Błąd");
+                }
+
+                else if (comboBox_Pracownicy.Text == "")
+                {
+                    MessageBox.Show("Nie wybrano stanowiska", "Błąd");
+                }
+                else
+                {
+                    string wybierz = "Select Login from Wyswietl_pracownik where Imie= '" + Tekst_Pracownicy_Imie.Text + "'and  Nazwisko= '" + Tekst_Pracownicy_Nazwisko.Text + "'and  Stanowisko = '" + comboBox_Pracownicy.Text + "'";
+                   // string temp = "update Pracownik set Imie = '" + Tekst_Pracownicy_Imie.Text + "', Nazwisko = '" + Tekst_Pracownicy_Nazwisko.Text + "', Stanowisko = '" + comboBox_Pracownicy.Text + "'" +
+                    //" where Imie = '" + row[0].ToString() + "' and Nazwisko= '" + row[1].ToString() + "' and Stanowisko = '" + row[2].ToString() + "'";
+                    sqlCmd.CommandText = wybierz;
+                    string login = sqlCmd.ExecuteScalar().ToString();
+                    string usun = "Drop User " + login + "User; " + "Drop Login " + login + "; update Pracownik set Status_zatrudnienia = 'zwolniony'  where Imie = '" + row[0].ToString() + "' and Nazwisko= '" + row[1].ToString() + "' and Stanowisko = '" + row[2].ToString() + "';"; 
+                    sqlCmd.CommandText = usun;
+                    sqlCmd.ExecuteReader();
+                    Tekst_Pracownicy_Imie.Text = "";
+                    Tekst_Pracownicy_Nazwisko.Text = "";
+                    comboBox_Pracownicy.Text = "";
+
+                }
+
+            }
+            else
+            {
+
+                MessageBox.Show("Wybierz pracownika", "Błąd");
+
+            }
+
+            wyswietlPracownicy();
+            sqlConn.Close();
         }
 
         private void Przycisk_Pracownicy_Edytuj_Click(object sender, RoutedEventArgs e)
@@ -605,6 +655,7 @@ namespace Restauracja
                 MessageBox.Show("Wybierz pracownika", "Błąd");
 
             }
+
             wyswietlPracownicy();
             sqlConn.Close();
 

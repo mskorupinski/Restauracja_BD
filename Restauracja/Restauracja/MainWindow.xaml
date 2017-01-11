@@ -122,14 +122,18 @@
                         </StackPanel>
                     </TabItem.Header>
                     <Grid Background="#FFE5E5E5" Margin="0,-1,0,1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="352*"/>
+                            <ColumnDefinition Width="237*"/>
+                        </Grid.ColumnDefinitions>
                         <DataGrid x:Name="Dane_Stoliki" HorizontalAlignment="Left" Margin="24,29,0,0" VerticalAlignment="Top" Height="231" Width="221" IsReadOnly="True" ColumnWidth="*" FrozenColumnCount="1"/>
-                        <Label x:Name="Etykieta_Stoliki_Miejsca" Content="Ilość miejsc" HorizontalAlignment="Left" Margin="290,118,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="Tekst_Stoliki_Miejsca" HorizontalAlignment="Left" Height="23" Margin="391,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.458,0.218" PreviewTextInput="Tekst_Stoliki_Miejsca_PreviewTextInput"/>
-                        <Button x:Name="Przycisk_Stoliki_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="290,241,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Stoliki_Dodaj_Click"/>
-                        <Label x:Name="Etykieta_Stoliki_Numer" Content="Numer stolika" HorizontalAlignment="Left" Margin="290,87,0,0" VerticalAlignment="Top"/>
-                        <TextBox x:Name="Tekst_Stoliki_Numer" HorizontalAlignment="Left" Height="23" Margin="391,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.458,0.218" PreviewTextInput="Tekst_Stoliki_Numer_PreviewTextInput"/>
-                        <Button x:Name="Przycisk_Stoliki_Usun" Content="Usuń" HorizontalAlignment="Left" Margin="380,241,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Stoliki_Usun_Click"/>
-                        <Button x:Name="Przycisk_Stoliki_Edytuj" Content="Zmień numer" HorizontalAlignment="Left" Margin="474,241,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Stoliki_Edytuj_Click"/>
+                        <Label x:Name="Etykieta_Stoliki_Miejsca" Content="Ilość miejsc" HorizontalAlignment="Left" Margin="290,118,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="Tekst_Stoliki_Miejsca" HorizontalAlignment="Left" Height="23" Margin="39.5,121,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.458,0.218" PreviewTextInput="Tekst_Stoliki_Miejsca_PreviewTextInput" Grid.Column="1"/>
+                        <Button x:Name="Przycisk_Stoliki_Dodaj" Content="Dodaj" HorizontalAlignment="Left" Margin="290,241,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Stoliki_Dodaj_Click" Grid.ColumnSpan="2"/>
+                        <Label x:Name="Etykieta_Stoliki_Numer" Content="Numer stolika" HorizontalAlignment="Left" Margin="290,87,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
+                        <TextBox x:Name="Tekst_Stoliki_Numer" HorizontalAlignment="Left" Height="23" Margin="39.5,87,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" RenderTransformOrigin="0.458,0.218" PreviewTextInput="Tekst_Stoliki_Numer_PreviewTextInput" Grid.Column="1"/>
+                        <Button x:Name="Przycisk_Stoliki_Usun" Content="Usuń" HorizontalAlignment="Left" Margin="28.5,241,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Stoliki_Usun_Click" Grid.Column="1"/>
+                        <Button x:Name="Przycisk_Stoliki_Edytuj" Content="Zmień numer" HorizontalAlignment="Left" Margin="122.5,241,0,0" VerticalAlignment="Top" Width="75" Click="Przycisk_Stoliki_Edytuj_Click" Grid.Column="1"/>
 
                     </Grid>
                 </TabItem>
