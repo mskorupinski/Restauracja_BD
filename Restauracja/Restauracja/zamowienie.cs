@@ -11,12 +11,10 @@ namespace Restauracja
     {
         private int produkt_id = 0;
         private int ilosc = 0;
-        private string szczegoly = "";
-        public pozycja(int p, int i, string s)
+        public pozycja(int p, int i)
         {
             produkt_id = p;
             ilosc = i;
-            szczegoly = s;
         }
         public int Produkt_id
         {
@@ -43,20 +41,10 @@ namespace Restauracja
 
         }
 
-        public string Szczegoly
-        {
-            get
-            {
-                return szczegoly;
-            }
-            set
-            {
-                szczegoly = value;
-            }
-
+       
         }
 
-    }
+    
     class zamowienie
     {
      private int numer_stolika=0;
@@ -125,7 +113,7 @@ namespace Restauracja
         }
         public void Dodaj(int p, int i, string s)
         {
-            zamowione.Add(new pozycja(p, i, s));
+            zamowione.Add(new pozycja(p, i));
         }
     public void Usun(int p, int i, string s)
     {
@@ -134,7 +122,7 @@ namespace Restauracja
         bool jest = false;
         foreach (pozycja temp in zamowione)
         {
-            if (temp.Produkt_id == p && temp.Ilosc == i && temp.Szczegoly.Equals(s))
+            if (temp.Produkt_id == p && temp.Ilosc == i )
             {
                 jest = true;
                 licznik = z;

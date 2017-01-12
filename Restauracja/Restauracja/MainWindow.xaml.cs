@@ -1106,6 +1106,69 @@ namespace Restauracja
         {
             combo.SelectedItem.ToString();
         }
+
+        private void WypelnijLiczbe(ComboBox combo)
+        {
+            for(int i=1; i<=10; i++)
+            {
+                combo.Items.Add(i.ToString());
+            }
+            combo.SelectedIndex = 0;
+        }
+
+        private void c1_Initialized(object sender, EventArgs e)
+        {
+            WypelnijLiczbe(c1);
+
+        }
+
+        private void c2_Initialized(object sender, EventArgs e)
+        {
+            WypelnijLiczbe(c2);
+        }
+
+        private void c3_Initialized(object sender, EventArgs e)
+        {
+            WypelnijLiczbe(c3);
+        }
+
+        private void c4_Initialized(object sender, EventArgs e)
+        {
+            WypelnijLiczbe(c4);
+        }
+
+        private void c5_Initialized(object sender, EventArgs e)
+        {
+            WypelnijLiczbe(c5);
+        }
+
+
+        private void Sztrzalka(ComboBox combo_Danie, ComboBox c)
+        {
+            string Sql = "select Numer, Miejsca from Wyswietl_Stolik where not Numer=0";
+            SqlConnection conn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(Sql, conn);
+            SqlDataReader DR = cmd.ExecuteReader();
+           
+            foreach (zamowienie temp in Zamowienia)
+            {
+                if (Convert.ToInt32(Combo_Zamowienie_Stolik.Text) == temp.Numer_stolika)
+                {
+
+
+
+                }
+            }
+
+
+            conn.Close();
+        }
+
+        private void listView_Initialized(object sender, EventArgs e)
+        {
+
+        }
     }
 
 }
