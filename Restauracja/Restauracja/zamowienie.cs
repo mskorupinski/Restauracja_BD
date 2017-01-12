@@ -62,12 +62,14 @@ namespace Restauracja
      private int numer_stolika=0;
      private int id_klienta=0;
      private int id_rezerwacji=0;
+     private int id_stolika = 0;
     
-    public zamowienie(int n, int ik,int ir)
+    public zamowienie(int n, int ik,int ir, int ids)
         {
             numer_stolika = n;
             id_klienta = ik;
             id_rezerwacji = ir;
+            id_stolika = ids;
         }
      private List<pozycja> zamowione=new List<pozycja>();
 
@@ -109,26 +111,38 @@ namespace Restauracja
             }
 
         }
-     public void Dodaj(int p, int i, string s)
+        public int Id_stolika
+        {
+            get
+            {
+                return id_stolika;
+            }
+            set
+            {
+                id_stolika = value;
+            }
+
+        }
+        public void Dodaj(int p, int i, string s)
         {
             zamowione.Add(new pozycja(p, i, s));
         }
-        public void Usun(int p, int i, string s)
+    public void Usun(int p, int i, string s)
+    {
+        int z = 0;
+        int licznik = 0;
+        bool jest = false;
+        foreach (pozycja temp in zamowione)
         {
-            int z = 0;
-            int licznik = 0;
-            bool jest = false;
-            foreach (pozycja temp in zamowione)
+            if (temp.Produkt_id == p && temp.Ilosc == i && temp.Szczegoly.Equals(s))
             {
-                if (temp.Produkt_id == p && temp.Ilosc == i && temp.Szczegoly.Equals(s))
-                {
-                    jest = true;
-                    licznik = z;
-                }
-                z++;
+                jest = true;
+                licznik = z;
             }
-            if (jest == true) { zamowione.RemoveAt(licznik); }
+            z++;
         }
+        if (jest == true) { zamowione.RemoveAt(licznik); }
+    }
 
     }
 }

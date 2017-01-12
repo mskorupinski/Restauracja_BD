@@ -25,15 +25,33 @@ namespace Restauracja
     public partial class MainWindow : Window
     {
         dane logowanie;
+        List<zamowienie> Zamowienia;
         public MainWindow()
         {
             InitializeComponent();
             wypelnijStanowiska();
             wyswietlStolik();
             wyswietlPracownicy();
+            SqlConnection sqlConn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+
+            sqlConn.Open();
+            SqlCommand sqlCmd = new SqlCommand();
+            sqlCmd.Connection = sqlConn;
+            string cmd = "Select * from Wyswietl_Stolik";
+            sqlCmd.CommandText = cmd;
+            SqlDataReader DR = sqlCmd.ExecuteReader();
+            Zamowienia = new List<zamowienie>();
+            while (DR.Read())
+            {
+                Zamowienia.Add(new zamowienie(Convert.ToInt32(DR[0]), 0, 0, Convert.ToInt32(DR[2])));
+
+            }
+            
+
+            sqlConn.Close();
 
         }
-        private String serwer = "E540";
+        private String serwer = "DESKTOP-BU2VMS6\\SQLEXPRESS";
         private void Zaloguj_Sie_Click(object sender, RoutedEventArgs e)
         {
              logowanie = new dane();
@@ -938,6 +956,7 @@ namespace Restauracja
 
         private void Zamowienie_Combo_Menu_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+
             if (Zamowienie_Combo_Menu.SelectedItem != null)
             {
 
@@ -1008,6 +1027,84 @@ namespace Restauracja
                 if (Zamowienie_Combo_Deser.Items.Count > 0) Zamowienie_Combo_Deser.Items.Clear();
                 if (Zamowienie_Combo_Napoj.Items.Count > 0) Zamowienie_Combo_Napoj.Items.Clear();
             }
+        }
+
+        private void Strzalka_Click(object sender, RoutedEventArgs e)
+        {
+            DataRowView row = (DataRowView)Dane_Rezerwacja.SelectedItem;
+            if (row != null)
+            {
+
+                SqlConnection conn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+                conn.Open();
+                DateTime date = Convert.ToDateTime(row[2].ToString());
+                string Sql = "select Idk from Wyswietl_Rezerwacja where Imie='" + row[0].ToString() + "' and Nazwisko= '" + row[1].ToString() + "' and Stolik = "+ Convert.ToInt32(row[4]) + " and Data= '" + date.Year + "-" + date.Month + "-" + date.Day +"' and Godzina= '"+ row[3].ToString()+"';";
+                SqlCommand cmd = new SqlCommand(Sql, conn);
+                int idk = (int)cmd.ExecuteScalar();
+
+                
+                Sql = "select Id_rezerwacji from Rezerwacja where Id_klienta= "+ idk+ " and Data_rezerwacji= '" + date.Year + "-" + date.Month + "-" + date.Day + "' and Czas_rezerwacji= '" + row[3].ToString() + "';";
+                cmd = new SqlCommand(Sql, conn);
+                int id_rezerwacji = (int)cmd.ExecuteScalar();
+
+                foreach (zamowienie temp in Zamowienia)
+                {
+                    if (Convert.ToInt32(row[4]) == temp.Numer_stolika)
+                    {
+                        temp.Id_klienta = idk;
+                        temp.Id_rezerwacji = id_rezerwacji;
+                        
+                    }   
+                }
+                Combo_Zamowienie_Stolik.Text = row[4].ToString();
+                tabControl.SelectedIndex = (tabControl.SelectedIndex - 1);
+            }
+            else
+                MessageBox.Show("Nie wybrano rezerwacji", "Błąd");
+        }
+
+        private void Combo_Zamowienie_Stolik_DropDownOpened(object sender, EventArgs e)
+        {
+
+            if (Combo_Zamowienie_Stolik.Items.Count > 0) Combo_Zamowienie_Stolik.Items.Clear();
+
+            string Sql = "select Numer, Miejsca from Wyswietl_Stolik where not Numer=0";
+            SqlConnection conn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(Sql, conn);
+            SqlDataReader DR = cmd.ExecuteReader();
+
+            while (DR.Read())
+            {
+                Combo_Zamowienie_Stolik.Items.Add(DR[0].ToString());
+
+            }
+
+            conn.Close();
+        }
+
+        private void Combo_Zamowienie_Stolik_Initialized(object sender, EventArgs e)
+        {
+            if (Combo_Zamowienie_Stolik.Items.Count > 0) Combo_Zamowienie_Stolik.Items.Clear();
+
+            string Sql = "select Numer, Miejsca from Wyswietl_Stolik where not Numer=0";
+            SqlConnection conn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+            conn.Open();
+            SqlCommand cmd = new SqlCommand(Sql, conn);
+            SqlDataReader DR = cmd.ExecuteReader();
+
+            while (DR.Read())
+            {
+                Combo_Zamowienie_Stolik.Items.Add(DR[0].ToString());
+
+            }
+
+            conn.Close();
+        }
+
+        private void Przeniesienie(ComboBox combo)
+        {
+            combo.SelectedItem.ToString();
         }
     }
 
