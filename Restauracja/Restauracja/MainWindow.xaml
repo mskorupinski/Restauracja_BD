@@ -33,18 +33,27 @@
                         </StackPanel>
                     </TabItem.Header>
                     <Grid Background="#FFE5E5E5" Margin="0,-2,0,1.4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="143*"/>
+                            <RowDefinition Height="179*"/>
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="52*"/>
                             <ColumnDefinition Width="211*"/>
                             <ColumnDefinition Width="325*"/>
                         </Grid.ColumnDefinitions>
-                        <ComboBox x:Name="Zamowienie_Combo_Menu" HorizontalAlignment="Left" Margin="44,43,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="Zamowienie_Combo_Menu_DropDownOpened" Grid.ColumnSpan="2" SelectionChanged="Zamowienie_Combo_Menu_SelectionChanged"/>
-                        <ComboBox x:Name="Zamowienie_Combo_Danie" HorizontalAlignment="Left" Margin="44,108,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
-                        <ComboBox x:Name="Zamowienie_Combo_Zupa" HorizontalAlignment="Left" Margin="44,150,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
-                        <ComboBox x:Name="Zamowienie_Combo_Przystawka" HorizontalAlignment="Left" Margin="44,189,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
-                        <ComboBox x:Name="Zamowienie_Combo_Deser" HorizontalAlignment="Left" Margin="44,234,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
-                        <ComboBox x:Name="Zamowienie_Combo_Napoj" HorizontalAlignment="Left" Margin="44,280,0,0" VerticalAlignment="Top" Width="120" Grid.ColumnSpan="2"/>
-                        <Label x:Name="Zamowienie_Etykieta_Menu" Content="Menu" HorizontalAlignment="Left" Margin="30,43,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.5,-1.077" Grid.Column="1"/>
+                        <ComboBox x:Name="Zamowienie_Combo_Menu" HorizontalAlignment="Left" Margin="20,43,0,0" VerticalAlignment="Top" Width="120" DropDownOpened="Zamowienie_Combo_Menu_DropDownOpened" SelectionChanged="Zamowienie_Combo_Menu_SelectionChanged" Grid.Column="1"/>
+                        <ComboBox x:Name="Zamowienie_Combo_Danie" HorizontalAlignment="Right" Margin="0,108,41,0" VerticalAlignment="Top" Width="120" Grid.Column="1"/>
+                        <ComboBox x:Name="Zamowienie_Combo_Zupa" HorizontalAlignment="Left" Margin="50,4,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="1"/>
+                        <ComboBox x:Name="Zamowienie_Combo_Przystawka" HorizontalAlignment="Left" Margin="50,44,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="1"/>
+                        <ComboBox x:Name="Zamowienie_Combo_Deser" HorizontalAlignment="Left" Margin="50,84,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="1"/>
+                        <ComboBox x:Name="Zamowienie_Combo_Napoj" HorizontalAlignment="Left" Margin="50,123,0,0" VerticalAlignment="Top" Width="120" Grid.Column="1" Grid.Row="1"/>
+                        <Label x:Name="Zamowienie_Etykieta_Menu" Content="Menu" HorizontalAlignment="Left" Margin="3,39,0,0" VerticalAlignment="Top" RenderTransformOrigin="-0.5,-1.077"/>
+                        <Label x:Name="label" Content="Dania główne:" HorizontalAlignment="Left" Margin="11,104,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="91"/>
+                        <Label x:Name="label1" Content="Zupy:" HorizontalAlignment="Left" Margin="6,0,0,0" VerticalAlignment="Top" RenderTransformOrigin="-1.921,2.423" Grid.Column="1" Grid.Row="1"/>
+                        <Label x:Name="label2" Content="Przystawki:" HorizontalAlignment="Left" Margin="29,40,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.Row="1"/>
+                        <Label x:Name="label3" Content="Desery:" HorizontalAlignment="Left" Margin="48,80,0,0" VerticalAlignment="Top" Width="49" Grid.ColumnSpan="2" Grid.Row="1"/>
+                        <Label x:Name="label4" Content="Napoje:" HorizontalAlignment="Left" Margin="46,119,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Grid.Row="1"/>
 
                     </Grid>
                 </TabItem>

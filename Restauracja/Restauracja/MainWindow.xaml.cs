@@ -916,7 +916,7 @@ namespace Restauracja
 
         private void Zamowienie_Combo_Menu_DropDownOpened(object sender, EventArgs e)
         {
-            Zamowienie_Etykieta_Menu.Visibility = Visibility.Hidden;
+
             if (Zamowienie_Combo_Menu.Items.Count > 0) Zamowienie_Combo_Menu.Items.Clear();
 
             string Sql = "select Opis from Menu";
