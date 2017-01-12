@@ -33,7 +33,7 @@ namespace Restauracja
             wyswietlPracownicy();
 
         }
-        private String serwer = "DESKTOP-BU2VMS6\\SQLEXPRESS";
+        private String serwer = "E540";
         private void Zaloguj_Sie_Click(object sender, RoutedEventArgs e)
         {
              logowanie = new dane();
