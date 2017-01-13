@@ -51,7 +51,7 @@ namespace Restauracja
             sqlConn.Close();
 
         }
-        private String serwer = "DESKTOP-BU2VMS6\\SQLEXPRESS";
+        private String serwer = "E540";
         private void Zaloguj_Sie_Click(object sender, RoutedEventArgs e)
         {
              logowanie = new dane();
@@ -335,7 +335,11 @@ namespace Restauracja
                 if (liczba_wierszu == 0)
                 {
                     sqlCmd.CommandText = "insert into Stolik (Ilosc_miejsc, Numer_stolika) Values(" + Tekst_Stoliki_Miejsca.Text.ToString() + "," + Tekst_Stoliki_Numer.Text.ToString() + ")";
-                    sqlCmd.ExecuteReader();
+                    sqlCmd.ExecuteNonQuery();
+                alter = "Select Id_stolika from Stolik where Numer_stolika =" + Tekst_Stoliki_Numer.Text.ToString();
+                sqlCmd.CommandText = alter;
+                int id = (int)sqlCmd.ExecuteScalar();
+                Zamowienia.Add(new zamowienie(Convert.ToInt32(Tekst_Stoliki_Numer.Text),0,0,id));
 
                 }
                 if (liczba_wierszu >= 1)
@@ -343,6 +347,7 @@ namespace Restauracja
                     MessageBox.Show("Stolik o podanym numerze już istnieje","Błąd");
 
                 }
+              
                 wyswietlStolik();
                 sqlConn.Close();
 
@@ -394,6 +399,7 @@ namespace Restauracja
                         sqlCmd.CommandText = temp;
                         sqlCmd.ExecuteReader();
                     }
+                    Usunstolik(Convert.ToInt32(row[0].ToString()));
                 }
                 else
                 {
@@ -419,6 +425,23 @@ namespace Restauracja
 
 
         }
+        public void Usunstolik(int numer_stolika)
+        {
+            int z = 0;
+            int licznik = 0;
+            bool jest = false;
+            foreach (zamowienie temp in Zamowienia)
+            {
+                if (temp.Numer_stolika==numer_stolika)
+                {
+                    jest = true;
+                    licznik = z;
+                }
+                z++;
+            }
+            if (jest == true) { Zamowienia.RemoveAt(licznik); }
+        }
+
 
         private void Przycisk_Stoliki_Edytuj_Click(object sender, RoutedEventArgs e)
         {
@@ -450,7 +473,8 @@ namespace Restauracja
                             string temp = "update Stolik set Numer_stolika = "+ Tekst_Stoliki_Numer.Text+" where Numer_stolika= " + row[0].ToString();
                             sqlCmd.CommandText = temp;
                             sqlCmd.ExecuteReader();
-                        
+
+                        Zmien_numer_stolik(Convert.ToInt32(Tekst_Stoliki_Numer.Text), Convert.ToInt32(row[0].ToString()));
                     }
                     else
                     {
@@ -475,7 +499,19 @@ namespace Restauracja
 
 
             }
-
+        public void Zmien_numer_stolik(int numer_stolika_nowy, int numer_stolika_stary)
+        {
+           
+            foreach (zamowienie temp in Zamowienia)
+            {
+                if (temp.Numer_stolika == numer_stolika_stary)
+                {
+                    temp.Numer_stolika = numer_stolika_nowy;
+                }
+               
+            }
+            
+        }
 
 
         public void wypelnijStanowiska()
@@ -1081,6 +1117,8 @@ namespace Restauracja
             }
 
             conn.Close();
+           
+
         }
 
         private void Combo_Zamowienie_Stolik_Initialized(object sender, EventArgs e)
@@ -1143,34 +1181,126 @@ namespace Restauracja
         }
 
 
-        private void Sztrzalka(ComboBox combo_Danie, ComboBox c)
+        private void obsluga(ComboBox combo_Danie, ComboBox c)
         {
-            string Sql = "select Numer, Miejsca from Wyswietl_Stolik where not Numer=0";
-            SqlConnection conn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
-            conn.Open();
-            SqlCommand cmd = new SqlCommand(Sql, conn);
-            SqlDataReader DR = cmd.ExecuteReader();
            
             foreach (zamowienie temp in Zamowienia)
             {
                 if (Convert.ToInt32(Combo_Zamowienie_Stolik.Text) == temp.Numer_stolika)
                 {
+                    if (combo_Danie.SelectedItem != null && Zamowienie_Combo_Menu.SelectedItem != null)
+                    {
+                         SqlConnection conn = new SqlConnection("Server = " + serwer + ";Integrated Security = SSPI; Database = 'Restauracja'");
+                            conn.Open();
+                            string Sql = "select * from Produkt_Nazwa_Menu where Nazwa='" + combo_Danie.SelectedItem.ToString() + "' and Menu='" + Zamowienie_Combo_Menu.SelectedItem.ToString()+"'";
+                            SqlCommand cmd = new SqlCommand(Sql, conn);
+                            SqlDataReader dataReader = cmd.ExecuteReader();
 
+                        if (dataReader != null)
+                        {
+                            DataTable dt = new DataTable();
+                            dt.Load(dataReader);
+                            temp.Dodaj(Convert.ToInt32(dt.Rows[0].ItemArray[0].ToString()), Convert.ToInt32(c.SelectedItem.ToString()), dt.Rows[0].ItemArray[1].ToString(), Convert.ToDouble(dt.Rows[0].ItemArray[2].ToString()));
+                            listView.Items.Clear();
+                            temp.Wyswietl(listView);
+                            dataReader.Close();
+                        }
+                                                   conn.Close();
+
+                        
+                    }
 
 
                 }
             }
+           
 
 
-            conn.Close();
         }
 
         private void listView_Initialized(object sender, EventArgs e)
         {
 
         }
+
+        private void listView_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
+
+        private void b1_Click(object sender, RoutedEventArgs e)
+        {
+            obsluga(Zamowienie_Combo_Danie, c1);
+        }
+
+        private void b2_Click(object sender, RoutedEventArgs e)
+        {
+            obsluga(Zamowienie_Combo_Zupa, c2);
+
+        }
+
+        private void b3_Click(object sender, RoutedEventArgs e)
+        {
+            obsluga(Zamowienie_Combo_Przystawka, c3);
+
+        }
+
+        private void b4_Click(object sender, RoutedEventArgs e)
+        {
+            obsluga(Zamowienie_Combo_Deser, c4);
+
+        }
+
+        private void b5_Click(object sender, RoutedEventArgs e)
+        {
+            obsluga(Zamowienie_Combo_Napoj, c5);
+
+        }
+
+        private void krzyżyk_Click(object sender, RoutedEventArgs e)
+        {
+            if (listView.SelectedItem != null&& Combo_Zamowienie_Stolik.SelectedItem!=null)
+            {
+
+                dolisty temp2 = (dolisty)listView.SelectedItem;
+                
+                foreach (zamowienie temp in Zamowienia)
+                {
+                    if (Convert.ToInt32(Combo_Zamowienie_Stolik.Text) == temp.Numer_stolika)
+                    {
+
+                        temp.Usun(temp2.Nazwa, Convert.ToInt32(temp2.Ilosc), temp2.Cena);
+
+                        }
+
+
+                    listView.Items.Clear();
+
+                    temp.Wyswietl(listView);
+                    }
+            
+                }
+        
+
+        }
+
+        private void Combo_Zamowienie_Stolik_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (Combo_Zamowienie_Stolik.SelectedItem != null)
+            {
+                foreach (zamowienie temp in Zamowienia)
+                {
+                    if (Convert.ToInt32(Combo_Zamowienie_Stolik.SelectedItem.ToString()) == temp.Numer_stolika)
+                    {
+                        listView.Items.Clear();
+                        temp.Wyswietl(listView);
+                    }
+                }
+            }
+        }
+    }
     }
 
-}
+
     
 

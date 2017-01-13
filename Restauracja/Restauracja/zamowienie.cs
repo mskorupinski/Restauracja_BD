@@ -7,14 +7,27 @@ using System.Threading.Tasks;
 namespace Restauracja
 
 {
+    class dolisty
+    {
+        public string Nazwa { get; set; }
+
+        public string Ilosc { get; set; }
+        public string Cena { get; set; }
+
+    }
+  
     class pozycja
     {
         private int produkt_id = 0;
+        private string nazwa="";
+        private double cena;
         private int ilosc = 0;
-        public pozycja(int p, int i)
+        public pozycja(int p, int i, string n, double c)
         {
             produkt_id = p;
             ilosc = i;
+            Nazwa = n;
+            Cena = c;
         }
         public int Produkt_id
         {
@@ -40,11 +53,36 @@ namespace Restauracja
             }
 
         }
+        public string Nazwa
+        {
+            get
+            {
+                return nazwa;
+            }
+            set
+            {
+                nazwa = value;
+            }
 
-       
         }
 
-    
+        public double Cena
+        {
+            get
+            {
+                return cena;
+            }
+            set
+            {
+                cena = value;
+            }
+
+        }
+
+
+    }
+
+
     class zamowienie
     {
      private int numer_stolika=0;
@@ -111,18 +149,31 @@ namespace Restauracja
             }
 
         }
-        public void Dodaj(int p, int i, string s)
+        public void Dodaj(int p, int i, string m, double c)
         {
-            zamowione.Add(new pozycja(p, i));
+            zamowione.Add(new pozycja(p, i,m,c));
         }
-    public void Usun(int p, int i, string s)
+        public void Wyswietl(System.Windows.Controls.ListView lista)
+        {
+
+            foreach (pozycja temp in zamowione)
+            {
+               
+                lista.Items.Add(new dolisty { Nazwa=temp.Nazwa.ToString(), Ilosc=temp.Ilosc.ToString(), Cena=temp.Cena.ToString() });
+
+
+            }
+
+
+        }
+    public void Usun(string p, int i, string c)
     {
         int z = 0;
         int licznik = 0;
         bool jest = false;
         foreach (pozycja temp in zamowione)
         {
-            if (temp.Produkt_id == p && temp.Ilosc == i )
+            if (temp.Nazwa == p && temp.Ilosc == i && c==temp.Cena.ToString())
             {
                 jest = true;
                 licznik = z;
@@ -133,4 +184,5 @@ namespace Restauracja
     }
 
     }
+
 }
